@@ -47,10 +47,10 @@ export function Hero() {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="relative col-span-1 mx-auto w-64 md:col-span-2 md:w-full"
+          className="relative col-span-1 mx-auto w-56 md:col-span-2 md:w-full"
         >
           <svg
-            className="absolute -top-10 -left-10 w-[140%] h-auto text-primary md:-top-16"
+            className="absolute -top-4 -left-4 w-[125%] h-auto text-primary md:-top-16"
             viewBox="0 0 578 544"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -64,7 +64,7 @@ export function Hero() {
           </svg>
 
           {avatarImage && (
-            <div className="relative mx-auto w-56 h-56 md:w-80 md:h-80">
+            <div className="relative mx-auto w-48 h-48 md:w-80 md:h-80">
               <Image
                 src={avatarImage.imageUrl}
                 alt={bio.name}
