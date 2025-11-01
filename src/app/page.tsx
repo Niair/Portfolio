@@ -6,6 +6,7 @@ import { Experience } from "@/components/sections/experience";
 import { Hero } from "@/components/sections/hero";
 import { Projects } from "@/components/sections/projects";
 import { Skills } from "@/components/sections/skills";
+import { Separator } from "@/components/ui/separator";
 
 export default function Home() {
   return (
@@ -14,9 +15,13 @@ export default function Home() {
       <main className="flex-1">
         <Hero />
         <About />
+        <Separator />
         <Skills />
+        <Separator />
         <Experience />
+        <Separator />
         <Projects />
+        <Separator />
         <Contact />
       </main>
       <Chatbot />

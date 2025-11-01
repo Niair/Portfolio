@@ -1,9 +1,16 @@
 "use client";
 
-import { Activity } from "lucide-react";
+import { Activity, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetClose,
+} from "@/components/ui/sheet";
+import { Button } from "./ui/button";
 
 const navItems = [
   { name: "About", href: "#about" },
@@ -49,6 +56,36 @@ export default function Header() {
             </Link>
           ))}
         </nav>
+        <div className="md:hidden">
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Menu className="h-6 w-6" />
+                <span className="sr-only">Open menu</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right">
+              <div className="flex flex-col gap-6 p-6">
+                <Link href="/" className="flex items-center gap-2 font-bold text-lg">
+                  <Activity className="h-6 w-6 text-primary" />
+                  <span>DataPulse</span>
+                </Link>
+                 <nav className="flex flex-col gap-4">
+                    {navItems.map((item) => (
+                        <SheetClose asChild key={item.name}>
+                            <Link
+                                href={item.href}
+                                className="text-lg font-medium text-foreground/80 transition-colors hover:text-foreground"
+                            >
+                                {item.name}
+                            </Link>
+                        </SheetClose>
+                    ))}
+                </nav>
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
       </div>
     </header>
   );

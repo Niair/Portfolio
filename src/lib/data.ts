@@ -3,7 +3,7 @@ import { BarChart3, BrainCircuit, Cloud, Code, Database, GanttChart, Github, Lin
 
 export const bio: BioData = {
   name: "Alex Data",
-  headline: "Data Scientist & AI Enthusiast",
+  headline: "Data Scientist | Software Engineer | Artificial Intelligence",
   summary:
     "I'm a passionate data scientist with a knack for turning complex datasets into actionable insights. My expertise lies in machine learning, statistical analysis, and data visualization. I'm always excited to tackle new challenges and build innovative data-driven solutions.",
   avatarImageId: "avatar",
@@ -147,5 +147,4 @@ export const socialLinks = [
     { name: "GitHub", url: "#", icon: Github },
     { name: "LinkedIn", url: "#", icon: Linkedin },
     { name: "Twitter", url: "#", icon: Twitter },
-    { name: "Email", url: "mailto:example@example.com", icon: Mail },
 ];
