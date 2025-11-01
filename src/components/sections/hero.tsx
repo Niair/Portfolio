@@ -19,7 +19,7 @@ export function Hero() {
   const avatarImage = getPlaceholderImage(bio.avatarImageId);
 
   return (
-    <section id="hero" className="relative min-h-[calc(100vh-4rem)] w-full flex items-center">
+    <section id="hero" className="relative min-h-[calc(100vh-4rem)] w-full flex items-center overflow-x-hidden">
       <div className="container mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-4 text-center md:grid-cols-5 md:text-left lg:px-8">
         {/* Socials */}
         <motion.div
@@ -50,7 +50,7 @@ export function Hero() {
           className="relative col-span-1 mx-auto w-64 md:col-span-2 md:w-full"
         >
           <svg
-            className="absolute -top-16 -left-10 w-[140%] h-auto text-primary"
+            className="absolute -top-10 -left-10 w-[140%] h-auto text-primary md:-top-16"
             viewBox="0 0 578 544"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -83,10 +83,10 @@ export function Hero() {
                   initial={{ opacity: 0, scale: 0.5 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5, delay: 1.2 }}
-                  className="absolute bottom-4 right-4 md:bottom-8 md:right-12 flex h-16 w-16 items-center justify-center rounded-full bg-background text-primary shadow-lg ring-4 ring-background transition-transform hover:scale-110"
+                  className="absolute bottom-4 right-4 md:bottom-8 md:right-12 flex h-14 w-14 md:h-16 md:w-16 items-center justify-center rounded-full bg-background text-primary shadow-lg ring-4 ring-background transition-transform hover:scale-110"
                   aria-label="Play video"
                 >
-                  <Play className="h-8 w-8" />
+                  <Play className="h-7 w-7 md:h-8 md:w-8" />
                 </motion.button>
             </DialogTrigger>
             <DialogContent className="max-w-3xl">
