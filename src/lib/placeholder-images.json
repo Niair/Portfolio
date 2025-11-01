@@ -1,3 +1,34 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "avatar",
+      "description": "User avatar",
+      "imageUrl": "https://images.unsplash.com/photo-1580893472468-01373fe4c97e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxwb3J0cmFpdCUyMHBlcnNvbnxlbnwwfHx8fDE3NjE5NDgzMDV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "portrait person"
+    },
+    {
+      "id": "project1",
+      "description": "Project 1 image",
+      "imageUrl": "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxkYXRhJTIwdmlzdWFsaXphdGlvbnxlbnwwfHx8fDE3NjE4OTQzNjB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "data visualization"
+    },
+    {
+      "id": "project2",
+      "description": "Project 2 image",
+      "imageUrl": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxtYWNoaW5lJTIwbGVhcm5pbmd8ZW58MHx8fHwxNzYxOTEyNjY3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "machine learning"
+    },
+    {
+      "id": "project3",
+      "description": "Project 3 image",
+      "imageUrl": "https://images.unsplash.com/photo-1644143153646-f36282dfb953?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8YW5hbHl0aWNzJTIwZGFzaGJvYXJkfGVufDB8fHx8MTc2MTk2MDI4OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "analytics dashboard"
+    },
+    {
+      "id": "project4",
+      "description": "Project 4 image",
+      "imageUrl": "https://images.unsplash.com/photo-1652365789688-9e41adee2355?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjbG91ZCUyMGFyY2hpdGVjdHVyZXxlbnwwfHx8fDE3NjE5MDAxNzh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cloud architecture"
+    }
+  ]
 }
