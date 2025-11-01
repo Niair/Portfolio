@@ -1,5 +1,5 @@
 import type { Project, BioData } from "@/lib/types";
-import { BarChart3, BrainCircuit, Cloud, Database, GanttChart, Github, Linkedin, Mail, Pyramid, Twitter } from "lucide-react";
+import { BarChart3, BrainCircuit, Cloud, Code, Database, GanttChart, Github, Linkedin, Mail, Pyramid, Server, Twitter } from "lucide-react";
 
 export const bio: BioData = {
   name: "Alex Data",
@@ -8,12 +8,52 @@ export const bio: BioData = {
     "I'm a passionate data scientist with a knack for turning complex datasets into actionable insights. My expertise lies in machine learning, statistical analysis, and data visualization. I'm always excited to tackle new challenges and build innovative data-driven solutions.",
   avatarImageId: "avatar",
   skills: [
-    { name: "Python", icon: Pyramid },
-    { name: "SQL", icon: Database },
-    { name: "Machine Learning", icon: BrainCircuit },
-    { name: "Data Visualization", icon: BarChart3 },
-    { name: "Cloud (AWS, GCP)", icon: Cloud },
-    { name: "Project Management", icon: GanttChart },
+    {
+      category: "Data Science & AI",
+      icon: BrainCircuit,
+      experience: "4+ Years XP",
+      skills: [
+        { name: "Computer Vision", level: 95 },
+        { name: "Generative AI", level: 95 },
+        { name: "Natural Language Processing", level: 95 },
+        { name: "Signal Processing", level: 90 },
+        { name: "Probability & Statistics", level: 90 },
+        { name: "Data Analytics & Visualization", level: 85 },
+      ],
+    },
+    {
+      category: "Programming",
+      icon: Code,
+      experience: "3+ Years XP",
+      skills: [
+        { name: "Python", level: 95 },
+        { name: "SQL", level: 90 },
+        { name: "JavaScript / TypeScript", level: 80 },
+        { name: "R", level: 75 },
+      ],
+    },
+    {
+        category: "Frameworks & Libraries",
+        icon: Pyramid,
+        experience: "3+ Years XP",
+        skills: [
+            { name: "Scikit-learn", level: 95 },
+            { name: "Pandas / NumPy", level: 95 },
+            { name: "TensorFlow / PyTorch", level: 90 },
+            { name: "Streamlit / FastAPI", level: 85 },
+        ]
+    },
+    {
+      category: "Computing & Cloud",
+      icon: Server,
+      experience: "3+ Years XP",
+      skills: [
+        { name: "AWS (S3, Redshift, SageMaker)", level: 90 },
+        { name: "GCP (BigQuery, Vertex AI)", level: 85 },
+        { name: "Docker", level: 80 },
+        { name: "Linux / Bash", level: 88 },
+      ],
+    },
   ],
   experience: [
     {

@@ -13,7 +13,14 @@ export type Project = {
 
 export type Skill = {
   name: string;
+  level: number;
+};
+
+export type SkillCategory = {
+  category: string;
   icon: LucideIcon;
+  experience: string;
+  skills: Skill[];
 };
 
 export type Experience = {
@@ -28,6 +35,6 @@ export type BioData = {
   headline: string;
   summary: string;
   avatarImageId: string;
-  skills: Skill[];
+  skills: SkillCategory[];
   experience: Experience[];
 };
