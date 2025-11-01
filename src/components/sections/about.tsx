@@ -1,6 +1,5 @@
 import { bio } from "@/lib/data";
 import { getPlaceholderImage } from "@/lib/placeholder-images";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 
@@ -37,24 +36,6 @@ export function About() {
                     <skill.icon className="h-5 w-5 text-primary" />
                     <span>{skill.name}</span>
                   </Badge>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <h3 className="text-2xl font-semibold mb-6">Experience</h3>
-              <div className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:h-full before:w-0.5 before:bg-border before:opacity-50">
-                {bio.experience.map((exp, index) => (
-                  <div key={index} className="relative flex items-start pl-12">
-                     <span className="absolute left-[11px] top-1 flex h-6 w-6 items-center justify-center rounded-full bg-primary ring-8 ring-secondary">
-                        <span className="h-2.5 w-2.5 rounded-full bg-primary-foreground"></span>
-                    </span>
-                    <div className="flex-1">
-                      <p className="font-semibold text-lg">{exp.role}</p>
-                      <p className="text-sm text-primary">{exp.company} | {exp.period}</p>
-                      <p className="mt-2 text-foreground/80">{exp.description}</p>
-                    </div>
-                  </div>
                 ))}
               </div>
             </div>

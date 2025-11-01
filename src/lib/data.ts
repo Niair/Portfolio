@@ -21,14 +21,21 @@ export const bio: BioData = {
       role: "Senior Data Scientist",
       period: "2020 - Present",
       description:
-        "Led a team to develop a predictive maintenance model for industrial machinery, reducing downtime by 20%. Designed and implemented a real-time analytics dashboard for marketing campaign performance.",
+        "Led a team to develop a predictive maintenance model for industrial machinery, reducing downtime by 20%.",
     },
     {
       company: "DataCorp",
       role: "Data Scientist",
       period: "2018 - 2020",
       description:
-        "Built a customer segmentation model that increased targeted marketing ROI by 15%. Performed exploratory data analysis to identify key trends in user behavior.",
+        "Built a customer segmentation model that increased targeted marketing ROI by 15%.",
+    },
+     {
+      company: "Cognizant",
+      role: "Programmer Analyst Trainee",
+      period: "2017 - 2018",
+      description:
+        "Developed and maintained web applications using modern JavaScript frameworks.",
     },
   ],
 };
