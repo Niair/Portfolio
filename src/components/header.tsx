@@ -7,6 +7,8 @@ import { cn } from "@/lib/utils";
 import {
   Sheet,
   SheetContent,
+  SheetHeader,
+  SheetTitle,
   SheetTrigger,
   SheetClose,
 } from "@/components/ui/sheet";
@@ -65,11 +67,15 @@ export default function Header() {
               </Button>
             </SheetTrigger>
             <SheetContent side="right">
+              <SheetHeader className="border-b pb-6">
+                 <SheetTitle>
+                    <Link href="/" className="flex items-center gap-2 font-bold text-lg">
+                      <Activity className="h-6 w-6 text-primary" />
+                      <span>DataPulse</span>
+                    </Link>
+                 </SheetTitle>
+              </SheetHeader>
               <div className="flex flex-col gap-6 p-6">
-                <Link href="/" className="flex items-center gap-2 font-bold text-lg">
-                  <Activity className="h-6 w-6 text-primary" />
-                  <span>DataPulse</span>
-                </Link>
                  <nav className="flex flex-col gap-4">
                     {navItems.map((item) => (
                         <SheetClose asChild key={item.name}>
