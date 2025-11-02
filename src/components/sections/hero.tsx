@@ -20,7 +20,7 @@ export function Hero() {
   const avatarImage = getPlaceholderImage(bio.avatarImageId);
 
   return (
-    <section id="hero" className="relative min-h-[calc(100vh-4rem)] w-full flex items-center overflow-x-hidden">
+    <section id="hero" className="relative pt-16 min-h-[calc(100vh-4rem)] w-full flex items-center overflow-x-hidden">
       <div className="container mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-4 text-center md:grid-cols-5 md:text-left lg:px-8">
         {/* Socials */}
         <motion.div
@@ -51,7 +51,7 @@ export function Hero() {
           className="relative col-span-1 mx-auto w-48 h-48 md:col-span-2 md:w-80 md:h-80"
         >
           <svg
-            className="absolute -top-2 -left-2 w-[115%] h-[115%] text-primary md:-top-8 md:-left-8 md:w-[125%] md:h-[125%]"
+            className="absolute -top-2 -left-2 w-[115%] h-[115%] text-primary md:-top-4 md:-left-4 md:w-[115%] md:h-[115%]"
             viewBox="0 0 578 544"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -65,7 +65,7 @@ export function Hero() {
           </svg>
 
           {avatarImage && (
-            <div className="relative mx-auto w-48 h-48 md:w-80 md:h-80">
+            <div className="relative mx-auto w-48 h-48 md:w-full md:h-full">
               <Image
                 src={avatarImage.imageUrl}
                 alt={bio.name}

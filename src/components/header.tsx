@@ -1,18 +1,8 @@
 "use client";
 
-import { Activity, Menu, X } from "lucide-react";
+import { Activity } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-  SheetClose,
-} from "@/components/ui/sheet";
-import { Button } from "./ui/button";
 
 const navItems = [
   { name: "About", href: "#about" },
@@ -23,29 +13,12 @@ const navItems = [
 ];
 
 export default function Header() {
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   return (
-    <header
-      className={cn(
-        "sticky top-0 z-50 w-full transition-all duration-300",
-        isScrolled
-          ? "border-b border-border/60 bg-background/80 backdrop-blur-sm"
-          : "bg-background"
-      )}
-    >
+    <header className="absolute top-0 z-50 w-full bg-transparent">
       <div className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-2 font-bold text-lg">
           <Activity className="h-6 w-6 text-primary" />
-          <span>DataPulse</span>
+          <span>Alex</span>
         </Link>
         {/* Desktop nav */}
         <nav className="hidden items-center gap-6 md:flex">
