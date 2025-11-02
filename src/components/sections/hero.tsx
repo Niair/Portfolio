@@ -51,7 +51,7 @@ export function Hero() {
           className="relative col-span-1 mx-auto w-48 h-48 md:col-span-2 md:w-80 md:h-80"
         >
           <svg
-            className="absolute -top-4 -left-4 w-[125%] h-auto text-primary md:-top-8 md:-left-8"
+            className="absolute -top-2 -left-2 w-[115%] h-[115%] text-primary md:-top-8 md:-left-8 md:w-[125%] md:h-[125%]"
             viewBox="0 0 578 544"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -84,10 +84,10 @@ export function Hero() {
                   initial={{ opacity: 0, scale: 0.5 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5, delay: 1.2 }}
-                  className="absolute bottom-0 right-0 md:bottom-2 md:right-4 flex h-14 w-14 items-center justify-center rounded-full bg-background text-primary shadow-lg ring-4 ring-background transition-transform hover:scale-110"
+                  className="absolute bottom-0 right-0 flex h-12 w-12 items-center justify-center rounded-full bg-background text-primary shadow-lg ring-4 ring-background transition-transform hover:scale-110 md:h-14 md:w-14"
                   aria-label="Play video"
                 >
-                  <Play className="h-7 w-7" />
+                  <Play className="h-6 w-6 md:h-7 md:w-7" />
                 </motion.button>
             </DialogTrigger>
             <DialogContent className="max-w-3xl">
