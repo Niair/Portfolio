@@ -47,6 +47,7 @@ export default function Header() {
           <Activity className="h-6 w-6 text-primary" />
           <span>DataPulse</span>
         </Link>
+        {/* Desktop nav */}
         <nav className="hidden items-center gap-6 md:flex">
           {navItems.map((item) => (
             <Link
@@ -58,39 +59,9 @@ export default function Header() {
             </Link>
           ))}
         </nav>
+        {/* Mobile menu trigger - hidden on larger screens */}
         <div className="md:hidden">
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <Menu className="h-6 w-6" />
-                <span className="sr-only">Open menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right">
-              <SheetHeader className="border-b pb-6">
-                 <SheetTitle>
-                    <Link href="/" className="flex items-center gap-2 font-bold text-lg">
-                      <Activity className="h-6 w-6 text-primary" />
-                      <span>DataPulse</span>
-                    </Link>
-                 </SheetTitle>
-              </SheetHeader>
-              <div className="flex flex-col gap-6 p-6">
-                 <nav className="flex flex-col gap-4">
-                    {navItems.map((item) => (
-                        <SheetClose asChild key={item.name}>
-                            <Link
-                                href={item.href}
-                                className="text-lg font-medium text-foreground/80 transition-colors hover:text-foreground"
-                            >
-                                {item.name}
-                            </Link>
-                        </SheetClose>
-                    ))}
-                </nav>
-              </div>
-            </SheetContent>
-          </Sheet>
+            {/* The mobile navigation is now handled by the bottom-nav component */}
         </div>
       </div>
     </header>

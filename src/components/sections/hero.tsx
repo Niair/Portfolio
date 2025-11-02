@@ -11,6 +11,7 @@ import {
   Dialog,
   DialogContent,
   DialogHeader,
+  DialogDescription,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
@@ -47,10 +48,10 @@ export function Hero() {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="relative col-span-1 mx-auto w-56 md:col-span-2 md:w-full"
+          className="relative col-span-1 mx-auto w-48 h-48 md:col-span-2 md:w-80 md:h-80"
         >
           <svg
-            className="absolute -top-4 -left-4 w-[125%] h-auto text-primary md:-top-16"
+            className="absolute -top-4 -left-4 w-[125%] h-auto text-primary md:-top-8 md:-left-8"
             viewBox="0 0 578 544"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -83,15 +84,16 @@ export function Hero() {
                   initial={{ opacity: 0, scale: 0.5 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5, delay: 1.2 }}
-                  className="absolute bottom-4 right-4 md:bottom-8 md:right-12 flex h-14 w-14 md:h-16 md:w-16 items-center justify-center rounded-full bg-background text-primary shadow-lg ring-4 ring-background transition-transform hover:scale-110"
+                  className="absolute bottom-0 right-0 md:bottom-2 md:right-4 flex h-14 w-14 items-center justify-center rounded-full bg-background text-primary shadow-lg ring-4 ring-background transition-transform hover:scale-110"
                   aria-label="Play video"
                 >
-                  <Play className="h-7 w-7 md:h-8 md:w-8" />
+                  <Play className="h-7 w-7" />
                 </motion.button>
             </DialogTrigger>
             <DialogContent className="max-w-3xl">
               <DialogHeader>
                 <DialogTitle>Intro Video</DialogTitle>
+                <DialogDescription>A short video introduction.</DialogDescription>
               </DialogHeader>
               <div className="aspect-video">
                 <iframe

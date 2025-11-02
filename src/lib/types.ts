@@ -38,3 +38,9 @@ export type BioData = {
   skills: SkillCategory[];
   experience: Experience[];
 };
+
+export type NavItem = {
+    name: string;
+    href: string;
+    icon: LucideIcon;
+}

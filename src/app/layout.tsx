@@ -1,6 +1,7 @@
 import type {Metadata} from 'next';
 import { Toaster } from "@/components/ui/toaster"
 import './globals.css';
+import { BottomNav } from '@/components/bottom-nav';
 
 export const metadata: Metadata = {
   title: 'DataPulse Portfolio',
@@ -22,6 +23,7 @@ export default function RootLayout({
       <body className="font-body bg-background text-foreground antialiased">
         {children}
         <Toaster />
+        <BottomNav />
       </body>
     </html>
   );
