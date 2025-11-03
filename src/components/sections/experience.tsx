@@ -5,7 +5,6 @@ import { bio } from '@/lib/data';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Briefcase, Calendar, GraduationCap } from 'lucide-react';
 import type { Experience as ExperienceType } from '@/lib/types';
-import { cn } from '@/lib/utils';
 
 const experienceData = {
   professional: bio.experience,
@@ -76,10 +75,13 @@ export function Experience() {
 
 function ExperienceList({ items }: { items: ExperienceType[] }) {
   return (
-    <div className="space-y-8">
+    <div className="relative border-l-2 border-primary/20 pl-6 space-y-12">
       {items.map((item, index) => (
-        <div key={index} className="flex gap-x-4">
-          <div>
+        <div key={index} className="relative">
+            <div className="absolute -left-[35px] top-1.5 flex items-center justify-center w-6 h-6 bg-primary rounded-full ring-4 ring-background">
+                <Briefcase className="w-3.5 h-3.5 text-primary-foreground" />
+            </div>
+            <div>
             <h3 className="text-lg font-bold">{item.role}</h3>
             <p className="text-md text-primary font-medium mt-1">{item.company}</p>
             <div className="mt-2 flex items-center gap-2 text-sm text-muted-foreground">
