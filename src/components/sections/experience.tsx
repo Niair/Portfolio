@@ -5,6 +5,7 @@ import { bio } from '@/lib/data';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Briefcase, Calendar, GraduationCap } from 'lucide-react';
 import type { Experience as ExperienceType } from '@/lib/types';
+import { motion } from 'framer-motion';
 
 const experienceData = {
   professional: bio.experience,
@@ -73,28 +74,46 @@ export function Experience() {
   );
 }
 
+const formatDescription = (description: string) => {
+  const parts = description.split(/(\d+%?|3x)/g);
+  return parts.map((part, index) =>
+    part.match(/(\d+%?|3x)/g) ? (
+      <strong key={index} className="font-bold text-primary">
+        {part}
+      </strong>
+    ) : (
+      part
+    )
+  );
+};
+
+
 function ExperienceList({ items }: { items: ExperienceType[] }) {
   return (
-    <div className="relative border-l-2 border-primary/20 pl-6 space-y-12">
+    <div className="relative border-l-2 border-primary/20 pl-8">
       {items.map((item, index) => (
-        <div key={index} className="relative">
-            <div className="absolute -left-[35px] top-1.5 flex items-center justify-center w-6 h-6 bg-primary rounded-full ring-4 ring-background">
-                <Briefcase className="w-3.5 h-3.5 text-primary-foreground" />
-            </div>
-            <div>
-            <h3 className="text-lg font-bold">{item.role}</h3>
-            <p className="text-md text-primary font-medium mt-1">{item.company}</p>
-            <div className="mt-2 flex items-center gap-2 text-sm text-muted-foreground">
-              <Calendar className="h-4 w-4" />
-              <span>{item.period}</span>
-            </div>
+        <motion.div 
+          key={index} 
+          className="relative mb-12"
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.5, delay: index * 0.1 }}
+        >
+          <div className="absolute -left-[42px] top-1 flex items-center justify-center w-6 h-6 bg-primary rounded-full ring-8 ring-background">
+            <Briefcase className="w-3.5 h-3.5 text-primary-foreground" />
+          </div>
+          <div>
+            <p className="text-sm text-muted-foreground mb-1">{item.period}</p>
+            <h3 className="text-xl font-bold text-foreground">{item.role}</h3>
+            <p className="text-md font-medium text-primary mt-1">{item.company}</p>
             {item.description && (
-              <p className="mt-2 text-md text-foreground/80">
-                {item.description}
+              <p className="mt-3 text-md text-foreground/80">
+                {formatDescription(item.description)}
               </p>
             )}
           </div>
-        </div>
+        </motion.div>
       ))}
     </div>
   );
