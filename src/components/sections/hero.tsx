@@ -26,41 +26,25 @@ export function Hero() {
     >
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
-          {/* Info */}
-          <div className="col-span-1 flex flex-col items-center text-center lg:col-span-7 lg:items-start lg:text-left">
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="text-4xl font-bold tracking-tight text-foreground sm:text-6xl lg:text-7xl"
-            >
-              Hi, I&apos;m {bio.name.split(' ')[0]}
-              <span className="inline-block animate-wave">👋</span>
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.8 }}
-              className="mt-4 max-w-xl text-lg text-foreground/80"
-            >
-              {bio.headline.split('|').map((part, index) => (
-                <span key={index} className='block'>{part.trim()}</span>
-              ))}
-            </motion.p>
-             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 1.0 }}
-              className="mt-8 flex flex-col items-center gap-4 sm:flex-row"
-            >
-              <Button asChild size="lg">
-                <Link href="#contact">
-                  Contact <MoveRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-            </motion.div>
-          </div>
-
+          {/* Social Links */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 1.2 }}
+            className="col-span-1 hidden flex-col items-center gap-6 lg:flex"
+          >
+            {socialLinks.map(link => (
+              <a
+                key={link.name}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-foreground/60 transition-colors hover:text-primary"
+              >
+                <link.icon className="h-6 w-6" />
+              </a>
+            ))}
+          </motion.div>
           {/* Image */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
@@ -83,7 +67,7 @@ export function Hero() {
             </svg>
 
             {avatarImage && (
-              <div className="relative mx-auto w-72 h-72 lg:w-full lg:h-full">
+              <div className="relative mx-auto w-72 h-72 lg:w-96 lg:h-96">
                 <Image
                   src={avatarImage.imageUrl}
                   alt={bio.name}
@@ -95,6 +79,59 @@ export function Hero() {
               </div>
             )}
           </motion.div>
+          {/* Info */}
+          <div className="col-span-1 flex flex-col items-center text-center lg:col-span-6 lg:items-start lg:text-left">
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="text-4xl font-bold tracking-tight text-foreground sm:text-6xl lg:text-7xl"
+            >
+              Hi, I&apos;m {bio.name.split(' ')[0]}{' '}
+              <span className="inline-block">💻🎸☕🧠❤️</span>
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.8 }}
+              className="mt-4 max-w-xl text-lg text-foreground/80"
+            >
+              {bio.headline.split('|').map((part, index) => (
+                <span key={index} className='block md:inline'>{part.trim()}{index < bio.headline.split('|').length - 1 && <span className='hidden md:inline'>&nbsp;|&nbsp;</span>}</span>
+              ))}
+            </motion.p>
+             <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 1.0 }}
+              className="mt-8 flex flex-col items-center gap-4 sm:flex-row"
+            >
+              <Button asChild size="lg">
+                <Link href="#contact">
+                  Contact <Send className="ml-2 h-5 w-5" />
+                </Link>
+              </Button>
+            </motion.div>
+             {/* Social Links for mobile */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 1.4 }}
+            className="mt-8 flex items-center gap-6 lg:hidden"
+          >
+            {socialLinks.map(link => (
+              <a
+                key={link.name}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-foreground/60 transition-colors hover:text-primary"
+              >
+                <link.icon className="h-7 w-7" />
+              </a>
+            ))}
+          </motion.div>
+          </div>
         </div>
 
         <motion.div
@@ -104,7 +141,7 @@ export function Hero() {
           duration: 1,
           delay: 1.5,
         }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:block"
       >
         <Link href="#about" aria-label="Scroll to about section" className='flex items-center gap-2 text-muted-foreground'>
             <div className='relative w-4 h-8 rounded-full border-2 border-muted-foreground'>
