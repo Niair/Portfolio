@@ -79,6 +79,7 @@ export const projects: Project[] = [
     imageId: "project1",
     liveDemoUrl: "#",
     sourceCodeUrl: "#",
+    youtubeUrl: "#",
     metrics: [
       { name: "Accuracy", value: 92, fill: "var(--color-accuracy)" },
       { name: "Precision", value: 88, fill: "var(--color-precision)" },
@@ -94,6 +95,7 @@ export const projects: Project[] = [
     imageId: "project2",
     liveDemoUrl: "#",
     sourceCodeUrl: "#",
+    youtubeUrl: "#",
     metrics: [
         { name: "MAE", value: 5, fill: "var(--color-mae)" },
         { name: "RMSE", value: 7, fill: "var(--color-rmse)" },
@@ -109,6 +111,7 @@ export const projects: Project[] = [
     imageId: "project3",
     liveDemoUrl: "#",
     sourceCodeUrl: "#",
+    youtubeUrl: "#",
     metrics: [
       { name: "F1-Score", value: 95, fill: "var(--color-f1)" },
       { name: "Accuracy", value: 97, fill: "var(--color-accuracy)" },
@@ -123,6 +126,7 @@ export const projects: Project[] = [
     imageId: "project4",
     liveDemoUrl: "#",
     sourceCodeUrl: "#",
+    youtubeUrl: "#",
     metrics: [
       { name: "Query Speed", value: 300, fill: "var(--color-speed)" },
       { name: "Cost Savings", value: 40, fill: "var(--color-savings)" },

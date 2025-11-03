@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Code, ExternalLink } from 'lucide-react';
+import { Code, ExternalLink, Youtube } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 type ProjectCardProps = {
@@ -77,9 +77,9 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
             </div>
           )}
         </CardContent>
-        <CardFooter className="flex-shrink-0 gap-4">
+        <CardFooter className="flex-shrink-0 gap-2 flex-wrap">
            {project.liveDemoUrl && project.liveDemoUrl !== '#' && (
-            <Button asChild>
+            <Button asChild size="sm">
               <a
                 href={project.liveDemoUrl}
                 target="_blank"
@@ -91,7 +91,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
             </Button>
           )}
           {project.sourceCodeUrl && project.sourceCodeUrl !== '#' && (
-            <Button asChild variant="outline">
+            <Button asChild variant="outline" size="sm">
               <a
                 href={project.sourceCodeUrl}
                 target="_blank"
@@ -99,6 +99,18 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
               >
                 <Code className="mr-2 h-4 w-4" />
                 Source Code
+              </a>
+            </Button>
+          )}
+           {project.youtubeUrl && project.youtubeUrl !== '#' && (
+            <Button asChild variant="outline" size="sm">
+              <a
+                href={project.youtubeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Youtube className="mr-2 h-4 w-4" />
+                YouTube
               </a>
             </Button>
           )}

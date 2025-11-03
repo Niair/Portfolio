@@ -8,6 +8,7 @@ export type Project = {
   imageId: string;
   liveDemoUrl: string;
   sourceCodeUrl: string;
+  youtubeUrl: string;
   metrics: { name: string; value: number; fill: string }[];
 };
 
