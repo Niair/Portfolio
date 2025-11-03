@@ -6,9 +6,9 @@ export type Project = {
   description: string;
   tags: string[];
   imageId: string;
-  liveDemoUrl: string;
-  sourceCodeUrl: string;
-  youtubeUrl: string;
+  liveDemoUrl?: string;
+  sourceCodeUrl?: string;
+  youtubeUrl?: string;
   metrics: { name: string; value: number; fill: string }[];
 };
 
