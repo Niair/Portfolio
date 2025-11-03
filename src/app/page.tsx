@@ -1,5 +1,5 @@
-import Chatbot from '@/components/chatbot';
 import Header from '@/components/header';
+import { CubeNav } from '@/components/cube-nav';
 import { About } from '@/components/sections/about';
 import { Contact } from '@/components/sections/contact';
 import { Experience } from '@/components/sections/experience';
@@ -24,7 +24,7 @@ export default function Home() {
         <Separator className="my-12 md:my-24" />
         <Contact />
       </main>
-      <Chatbot />
+      <CubeNav />
     </div>
   );
 }
