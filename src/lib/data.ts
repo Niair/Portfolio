@@ -2,7 +2,7 @@ import type { Project, BioData } from "@/lib/types";
 import { BarChart3, BrainCircuit, Cloud, Code, Database, GanttChart, Github, Linkedin, Mail, Pyramid, Server, Twitter } from "lucide-react";
 
 export const bio: BioData = {
-  name: "Alex Data",
+  name: "Akshay",
   headline: "Data Scientist | Software Engineer | Artificial Intelligence",
   summary:
     "I'm a passionate data scientist with a knack for turning complex datasets into actionable insights. My expertise lies in machine learning, statistical analysis, and data visualization. I'm always excited to tackle new challenges and build innovative data-driven solutions.",
@@ -42,18 +42,7 @@ export const bio: BioData = {
             { name: "TensorFlow / PyTorch", level: 90 },
             { name: "Streamlit / FastAPI", level: 85 },
         ]
-    },
-    {
-      category: "Computing & Cloud",
-      icon: Server,
-      experience: "3+ Years XP",
-      skills: [
-        { name: "AWS (S3, Redshift, SageMaker)", level: 90 },
-        { name: "GCP (BigQuery, Vertex AI)", level: 85 },
-        { name: "Docker", level: 80 },
-        { name: "Linux / Bash", level: 88 },
-      ],
-    },
+    }
   ],
   experience: [
     {
@@ -86,7 +75,7 @@ export const projects: Project[] = [
     title: "Customer Churn Prediction",
     description:
       "A machine learning model to predict customer churn for a subscription-based service. The model helps in identifying at-risk customers, allowing for proactive retention strategies.",
-    tags: ["Machine Learning", "Python", "Scikit-learn"],
+    tags: ["ML", "Python", "Scikit-learn"],
     imageId: "project1",
     liveDemoUrl: "#",
     sourceCodeUrl: "#",
@@ -101,7 +90,7 @@ export const projects: Project[] = [
     title: "Sales Forecasting Dashboard",
     description:
       "An interactive dashboard built with Streamlit that provides real-time sales forecasting. It uses time-series analysis to predict future sales trends.",
-    tags: ["Data Visualization", "Time Series", "Streamlit"],
+    tags: ["Data Visualization", "Time Series", "Streamlit", "EDA"],
     imageId: "project2",
     liveDemoUrl: "#",
     sourceCodeUrl: "#",
@@ -116,28 +105,26 @@ export const projects: Project[] = [
     title: "Sentiment Analysis of Reviews",
     description:
       "A natural language processing (NLP) project to analyze customer reviews and classify them as positive, negative, or neutral. This helps businesses gauge customer satisfaction.",
-    tags: ["NLP", "FastAPI", "TensorFlow"],
+    tags: ["NLP", "DL", "FastAPI", "TensorFlow"],
     imageId: "project3",
     liveDemoUrl: "#",
     sourceCodeUrl: "#",
     metrics: [
       { name: "F1-Score", value: 95, fill: "var(--color-f1)" },
       { name: "Accuracy", value: 97, fill: "var(--color-accuracy)" },
-      { name: "Latency", value: 50, fill: "var(--color-latency)" },
     ],
   },
   {
     id: "proj-4",
-    title: "Cloud Data Warehouse",
+    title: "Cloud Data Warehouse & MLOps",
     description:
-      "Designed and deployed a scalable data warehouse on AWS using Redshift. This project streamlined data access and improved query performance for BI tools by 3x.",
-    tags: ["Cloud", "Data Engineering", "AWS"],
+      "Designed and deployed a scalable data warehouse on AWS and an MLOps pipeline for model deployment. This project streamlined data access and improved query performance by 3x.",
+    tags: ["Cloud", "Data Engineering", "AWS", "MLOps"],
     imageId: "project4",
     liveDemoUrl: "#",
     sourceCodeUrl: "#",
     metrics: [
       { name: "Query Speed", value: 300, fill: "var(--color-speed)" },
-      { name: "Data Volume", value: 500, fill: "var(--color-volume)" },
       { name: "Cost Savings", value: 40, fill: "var(--color-savings)" },
     ],
   },

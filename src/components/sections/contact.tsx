@@ -68,7 +68,7 @@ export function Contact() {
         
         <div className="flex justify-center gap-4 my-8">
             <Button asChild variant="outline" aria-label="Email">
-                <Link href="mailto:alex.data@example.com"><Mail className="mr-2 h-4 w-4" /> Email</Link>
+                <Link href="mailto:akshay.data@example.com"><Mail className="mr-2 h-4 w-4" /> Email</Link>
             </Button>
             <Button asChild variant="outline" aria-label="LinkedIn">
                 <Link href="#"><Linkedin className="mr-2 h-4 w-4" /> LinkedIn</Link>

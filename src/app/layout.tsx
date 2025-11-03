@@ -4,7 +4,7 @@ import './globals.css';
 import { BottomNav } from '@/components/bottom-nav';
 
 export const metadata: Metadata = {
-  title: 'DataPulse Portfolio',
+  title: 'Akshay | AI Engineer',
   description: 'Welcome to my data science portfolio.',
 };
 
@@ -14,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="!scroll-smooth dark">
+    <html lang="en" className="!scroll-smooth">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link

@@ -37,15 +37,18 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
     >
-      <Card className="flex h-full flex-col overflow-hidden transition-all hover:shadow-xl bg-card border-none rounded-2xl">
+      <Card className="flex h-full flex-col overflow-hidden transition-all hover:shadow-xl bg-card border rounded-2xl">
         {projectImage && (
           <div className="relative h-60 w-full">
             <Image
               src={projectImage.imageUrl}
               alt={project.title}
               fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               data-ai-hint={projectImage.imageHint}
               className="object-cover"
+              priority={index < 2}
+              loading={index < 2 ? 'eager' : 'lazy'}
             />
           </div>
         )}
@@ -61,28 +64,44 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
               </Badge>
             ))}
           </div>
+           {project.metrics.length > 0 && (
+            <div>
+              <h4 className="font-semibold mb-2 text-sm">Key Metrics:</h4>
+              <div className="flex flex-wrap gap-2">
+                {project.metrics.slice(0, 3).map(metric => (
+                  <Badge key={metric.name} variant="outline" className="font-mono">
+                    {metric.name}: {metric.value}%
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          )}
         </CardContent>
         <CardFooter className="flex-shrink-0 gap-4">
-          <Button asChild>
-            <a
-              href={project.liveDemoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <ExternalLink className="mr-2 h-4 w-4" />
-              Live Demo
-            </a>
-          </Button>
-          <Button asChild variant="outline">
-            <a
-              href={project.sourceCodeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Code className="mr-2 h-4 w-4" />
-              Source Code
-            </a>
-          </Button>
+           {project.liveDemoUrl && project.liveDemoUrl !== '#' && (
+            <Button asChild>
+              <a
+                href={project.liveDemoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ExternalLink className="mr-2 h-4 w-4" />
+                Live Demo
+              </a>
+            </Button>
+          )}
+          {project.sourceCodeUrl && project.sourceCodeUrl !== '#' && (
+            <Button asChild variant="outline">
+              <a
+                href={project.sourceCodeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Code className="mr-2 h-4 w-4" />
+                Source Code
+              </a>
+            </Button>
+          )}
         </CardFooter>
       </Card>
     </motion.div>

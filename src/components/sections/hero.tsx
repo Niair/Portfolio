@@ -45,19 +45,7 @@ export function Hero() {
             className="relative col-span-1 mx-auto flex justify-center lg:order-last lg:col-span-5"
           >
             <div className="relative w-80 h-80 lg:w-96 lg:h-96">
-              <svg
-                className="absolute top-1/2 left-1/2 h-[110%] w-[110%] -translate-x-1/2 -translate-y-1/2 text-primary/10"
-                viewBox="0 0 578 544"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M173.364 6.83079C249.531 -11.0873 332.115 13.332 396.649 61.334C462.11 110.024 513.582 179.914 544.138 259.014C574.694 338.113 581.832 426.96 558.583 505.405C535.334 583.85 480.669 645.724 410.535 677.53C340.401 709.335 258.91 709.422 184.417 680.183C109.924 650.944 47.7999 591.5 13.9166 520.407C-19.9667 449.314 -30.0107 368.832 -13.1979 292.83C3.61492 216.827 47.0168 149.63 103.543 99.245C160.068 48.8601 228.423 20.4355 289 0L289 272L173.364 6.83079Z"
-                  fill="currentColor"
-                />
-              </svg>
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent rounded-full -z-10 blur-3xl"></div>
               {avatarImage && (
                 <div className="relative mx-auto w-72 h-72 lg:w-80 lg:h-80 rounded-full overflow-hidden shadow-2xl">
                   <Image
