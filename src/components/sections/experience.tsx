@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { bio } from '@/lib/data';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Briefcase, Calendar, GraduationCap } from 'lucide-react';
+import { Briefcase, GraduationCap } from 'lucide-react';
 import type { Experience as ExperienceType } from '@/lib/types';
 import { motion } from 'framer-motion';
 
@@ -50,13 +50,13 @@ export function Experience() {
           <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 bg-card p-1 rounded-lg">
             <TabsTrigger
               value="academic"
-              className="flex items-center gap-2 text-md rounded-md"
+              className="flex items-center gap-2 text-md rounded-md py-2"
             >
               <GraduationCap className="h-5 w-5" /> Academic
             </TabsTrigger>
             <TabsTrigger
               value="professional"
-              className="flex items-center gap-2 text-md rounded-md"
+              className="flex items-center gap-2 text-md rounded-md py-2"
             >
               <Briefcase className="h-5 w-5" /> Professional
             </TabsTrigger>
