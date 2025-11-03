@@ -1,9 +1,17 @@
 
-"use client";
+'use client';
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Home, User, Briefcase, Code, Mail, BarChart3, Star } from 'lucide-react';
+import {
+  Home,
+  User,
+  Briefcase,
+  Code,
+  Mail,
+  BarChart3,
+  Star,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
@@ -11,8 +19,8 @@ import { motion } from 'framer-motion';
 const navItems = [
   { name: 'Home', href: '#hero', icon: Home },
   { name: 'About', href: '#about', icon: User },
-  { name: 'Skills', href: '#skills', icon: Star },
   { name: 'Experience', href: '#experience', icon: Briefcase },
+  { name: 'Skills', href: '#skills', icon: Star },
   { name: 'Projects', href: '#projects', icon: BarChart3 },
   { name: 'Contact', href: '#contact', icon: Mail },
 ];
@@ -25,7 +33,9 @@ export function BottomNav() {
   useEffect(() => {
     setIsMounted(true);
     const handleScroll = () => {
-      const sections = navItems.map(item => document.getElementById(item.href.substring(1)));
+      const sections = navItems.map(item =>
+        document.getElementById(item.href.substring(1))
+      );
       let currentSection = 'hero';
 
       sections.forEach(section => {
@@ -51,7 +61,7 @@ export function BottomNav() {
     <nav className="fixed bottom-4 left-1/2 z-50 -translate-x-1/2 md:hidden">
       <div className="rounded-2xl border border-border/40 bg-background/60 p-2 shadow-lg backdrop-blur-lg">
         <ul className="flex items-center justify-center gap-2">
-          {navItems.map((item) => (
+          {navItems.map(item => (
             <li key={item.name} className="relative">
               <Link
                 href={item.href}

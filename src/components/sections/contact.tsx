@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { submitContactForm } from "@/app/actions";
-import { useToast } from "@/hooks/use-toast";
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { submitContactForm } from '@/app/actions';
+import { useToast } from '@/hooks/use-toast';
 import {
   Form,
   FormControl,
@@ -12,16 +12,16 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@/components/ui/button';
+import { Loader2 } from 'lucide-react';
 
 const formSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters."),
-  email: z.string().email("Please enter a valid email address."),
-  message: z.string().min(10, "Message must be at least 10 characters."),
+  name: z.string().min(2, 'Name must be at least 2 characters.'),
+  email: z.string().email('Please enter a valid email address.'),
+  message: z.string().min(10, 'Message must be at least 10 characters.'),
 });
 
 export function Contact() {
@@ -29,9 +29,9 @@ export function Contact() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      email: "",
-      message: "",
+      name: '',
+      email: '',
+      message: '',
     },
   });
 
@@ -41,27 +41,27 @@ export function Contact() {
     const result = await submitContactForm(values);
     if (result.success) {
       toast({
-        title: "Message Sent!",
+        title: 'Message Sent!',
         description: "Thanks for reaching out. I'll get back to you soon.",
       });
       form.reset();
     } else {
       toast({
-        variant: "destructive",
-        title: "Uh oh! Something went wrong.",
-        description: result.message || "There was a problem with your request.",
+        variant: 'destructive',
+        title: 'Uh oh! Something went wrong.',
+        description: result.message || 'There was a problem with your request.',
       });
     }
   }
 
   return (
-    <section id="contact" className="py-16 sm:py-24 bg-secondary">
+    <section id="contact" className="py-16 sm:py-32">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+          <h2 className="text-3xl font-bold tracking-tight sm:text-5xl">
             Get in Touch
           </h2>
-          <p className="mt-4 text-lg text-foreground/80">
+          <p className="mt-4 text-lg text-muted-foreground">
             Have a question or want to work together? Send me a message!
           </p>
         </div>
@@ -73,7 +73,6 @@ export function Contact() {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Name</FormLabel>
                     <FormControl>
                       <Input placeholder="Your Name" {...field} />
                     </FormControl>
@@ -86,7 +85,6 @@ export function Contact() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
                     <FormControl>
                       <Input placeholder="your.email@example.com" {...field} />
                     </FormControl>
@@ -99,7 +97,6 @@ export function Contact() {
                 name="message"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Message</FormLabel>
                     <FormControl>
                       <Textarea
                         placeholder="Tell me a bit about your project or query..."
@@ -111,14 +108,19 @@ export function Contact() {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" disabled={isSubmitting}>
+              <Button
+                type="submit"
+                className="w-full"
+                size="lg"
+                disabled={isSubmitting}
+              >
                 {isSubmitting ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     Sending...
                   </>
                 ) : (
-                  "Send Message"
+                  'Send Message'
                 )}
               </Button>
             </form>
