@@ -25,8 +25,9 @@ export function About() {
               <div className="relative w-80 h-96 rounded-2xl overflow-hidden shadow-lg transform transition-transform duration-300 hover:scale-105">
                 <Image
                   src={aboutImage.imageUrl}
-                  alt="About me"
+                  alt="A professional portrait of Alex Data"
                   fill
+                  sizes="(max-width: 1024px) 80vw, 320px"
                   data-ai-hint={aboutImage.imageHint}
                   className="object-cover"
                 />
@@ -35,19 +36,24 @@ export function About() {
           </div>
           <div className="lg:col-span-3">
             <p className="text-lg text-foreground/80 leading-relaxed">
-              {bio.summary}
+              I&apos;m a passionate data scientist turning complex datasets into actionable insights through machine learning and data visualization. I am always excited to tackle new challenges and build innovative data-driven solutions.
             </p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              <span className="inline-flex items-center rounded-md bg-secondary px-2 py-1 text-sm font-medium text-secondary-foreground">Machine Learning</span>
+              <span className="inline-flex items-center rounded-md bg-secondary px-2 py-1 text-sm font-medium text-secondary-foreground">Data Visualization</span>
+              <span className="inline-flex items-center rounded-md bg-secondary px-2 py-1 text-sm font-medium text-secondary-foreground">Statistical Analysis</span>
+            </div>
             <div className="mt-10 flex gap-8">
               <div>
-                <p className="text-4xl font-bold text-primary">04+</p>
+                <p className="text-4xl font-bold text-primary" aria-label="Over 4 years of experience">4+</p>
                 <p className="text-muted-foreground mt-1">Years experience</p>
               </div>
               <div>
-                <p className="text-4xl font-bold text-primary">23+</p>
+                <p className="text-4xl font-bold text-primary" aria-label="Over 23 projects completed">23+</p>
                 <p className="text-muted-foreground mt-1">Projects completed</p>
               </div>
               <div>
-                <p className="text-4xl font-bold text-primary">03+</p>
+                <p className="text-4xl font-bold text-primary" aria-label="Worked at over 3 companies">3+</p>
                 <p className="text-muted-foreground mt-1">Companies worked</p>
               </div>
             </div>

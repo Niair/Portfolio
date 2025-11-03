@@ -10,13 +10,13 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { Loader2 } from 'lucide-react';
+import { Github, Linkedin, Loader2, Mail } from 'lucide-react';
+import Link from 'next/link';
 
 const formSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters.'),
@@ -42,7 +42,7 @@ export function Contact() {
     if (result.success) {
       toast({
         title: 'Message Sent!',
-        description: "Thanks for reaching out. I'll get back to you soon.",
+        description: result.message,
       });
       form.reset();
     } else {
@@ -59,12 +59,25 @@ export function Contact() {
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl mx-auto text-center">
           <h2 className="text-3xl font-bold tracking-tight sm:text-5xl">
-            Get in Touch
+            Get In Touch
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
             Have a question or want to work together? Send me a message!
           </p>
         </div>
+        
+        <div className="flex justify-center gap-4 my-8">
+            <Button asChild variant="outline" aria-label="Email">
+                <Link href="mailto:alex.data@example.com"><Mail className="mr-2 h-4 w-4" /> Email</Link>
+            </Button>
+            <Button asChild variant="outline" aria-label="LinkedIn">
+                <Link href="#"><Linkedin className="mr-2 h-4 w-4" /> LinkedIn</Link>
+            </Button>
+            <Button asChild variant="outline" aria-label="GitHub">
+                <Link href="#"><Github className="mr-2 h-4 w-4" /> GitHub</Link>
+            </Button>
+        </div>
+
         <div className="mt-12 max-w-xl mx-auto">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

@@ -22,5 +22,5 @@ export async function submitContactForm(values: z.infer<typeof formSchema>) {
   // Simulate network delay
   await new Promise(resolve => setTimeout(resolve, 1000));
 
-  return { success: true };
+  return { success: true, message: "Thanks for reaching out! I'll get back to you soon." };
 }

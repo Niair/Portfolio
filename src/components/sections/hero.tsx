@@ -14,7 +14,7 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-screen w-full items-center justify-center overflow-hidden pt-24"
+      className="relative flex min-h-screen w-full items-center justify-center overflow-hidden pt-32 sm:pt-24"
     >
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
@@ -31,6 +31,7 @@ export function Hero() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-foreground/60 transition-colors hover:text-primary"
+                aria-label={link.name}
               >
                 <link.icon className="h-6 w-6" />
               </a>
@@ -45,7 +46,7 @@ export function Hero() {
           >
             <div className="relative w-80 h-80 lg:w-96 lg:h-96">
               <svg
-                className="absolute top-1/2 left-1/2 h-[125%] w-[125%] -translate-x-1/2 -translate-y-1/2 text-primary/30"
+                className="absolute top-1/2 left-1/2 h-[110%] w-[110%] -translate-x-1/2 -translate-y-1/2 text-primary/10"
                 viewBox="0 0 578 544"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -61,8 +62,9 @@ export function Hero() {
                 <div className="relative mx-auto w-72 h-72 lg:w-80 lg:h-80 rounded-full overflow-hidden shadow-2xl">
                   <Image
                     src={avatarImage.imageUrl}
-                    alt={bio.name}
+                    alt={`${bio.name} - ${bio.headline}`}
                     fill
+                    sizes="(max-width: 768px) 70vw, 320px"
                     data-ai-hint={avatarImage.imageHint}
                     className="relative object-cover"
                     priority
@@ -127,6 +129,7 @@ export function Hero() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-foreground/60 transition-colors hover:text-primary"
+                  aria-label={link.name}
                 >
                   <link.icon className="h-7 w-7" />
                 </a>
