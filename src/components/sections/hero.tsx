@@ -2,7 +2,7 @@
 
 import { bio, socialLinks } from '@/lib/data';
 import { Button } from '@/components/ui/button';
-import { Download } from 'lucide-react';
+import { Download, Play } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
@@ -101,6 +101,11 @@ export function Hero() {
               <Button asChild size="lg">
                 <a href="/resume.pdf" download="Akshay-Resume.pdf">
                   Download Resume <Download className="ml-2 h-5 w-5" />
+                </a>
+              </Button>
+              <Button asChild size="lg" variant="outline">
+                <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer">
+                  Intro Video <Play className="ml-2 h-5 w-5" />
                 </a>
               </Button>
             </motion.div>
