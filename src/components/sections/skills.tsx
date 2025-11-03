@@ -31,7 +31,7 @@ export function Skills() {
               <AccordionItem
                 key={skillCategory.category}
                 value={`item-${index}`}
-                className="border-none rounded-2xl bg-card"
+                className="border-none rounded-2xl bg-card shadow-sm transition-shadow hover:shadow-md"
               >
                 <AccordionTrigger className="w-full flex justify-between items-center p-6 hover:no-underline">
                   <div className="flex items-center gap-4">
@@ -54,7 +54,7 @@ export function Skills() {
                             {skill.level}%
                           </p>
                         </div>
-                        <Progress value={skill.level} className="h-2"/>
+                        <Progress value={skill.level} className="h-2.5"/>
                       </div>
                     ))}
                   </div>
