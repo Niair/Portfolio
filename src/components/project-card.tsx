@@ -37,7 +37,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
     >
-      <Card className="flex h-full flex-col overflow-hidden transition-all hover:shadow-xl bg-card">
+      <Card className="flex h-full flex-col overflow-hidden transition-all hover:shadow-xl bg-card border-none rounded-2xl">
         {projectImage && (
           <div className="relative h-60 w-full">
             <Image
@@ -51,12 +51,12 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
         )}
         <CardHeader>
           <CardTitle>{project.title}</CardTitle>
-          <CardDescription>{project.description}</CardDescription>
+          <CardDescription className="mt-2">{project.description}</CardDescription>
         </CardHeader>
         <CardContent className="flex-grow space-y-6">
           <div className="flex flex-wrap gap-2">
             {project.tags.map(tag => (
-              <Badge key={tag} variant="secondary">
+              <Badge key={tag} variant="secondary" className="rounded-lg">
                 {tag}
               </Badge>
             ))}

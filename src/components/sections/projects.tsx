@@ -9,7 +9,7 @@ export function Projects() {
           <h2 className="text-3xl font-bold tracking-tight sm:text-5xl">
             My Projects
           </h2>
-          <p className="mt-2 max-w-2xl mx-auto text-lg text-muted-foreground">
+          <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
             Here are some of the projects I've worked on.
           </p>
         </div>

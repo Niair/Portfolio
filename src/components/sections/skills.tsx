@@ -11,13 +11,13 @@ import { bio } from '@/lib/data';
 
 export function Skills() {
   return (
-    <section id="skills" className="py-16 sm:py-32 bg-muted/20">
+    <section id="skills" className="py-16 sm:py-32">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold tracking-tight sm:text-5xl">
             My Skills
           </h2>
-          <p className="mt-2 max-w-2xl mx-auto text-lg text-muted-foreground">
+          <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
             A breakdown of my technical abilities and expertise.
           </p>
         </div>
@@ -31,7 +31,7 @@ export function Skills() {
               <AccordionItem
                 key={skillCategory.category}
                 value={`item-${index}`}
-                className="border rounded-lg bg-card"
+                className="border-none rounded-2xl bg-card"
               >
                 <AccordionTrigger className="w-full flex justify-between items-center p-6 hover:no-underline">
                   <div className="flex items-center gap-4">
@@ -40,6 +40,7 @@ export function Skills() {
                       <h3 className="text-lg font-semibold">
                         {skillCategory.category}
                       </h3>
+                      <p className="text-sm text-muted-foreground">{skillCategory.experience}</p>
                     </div>
                   </div>
                 </AccordionTrigger>

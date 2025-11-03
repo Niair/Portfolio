@@ -15,9 +15,13 @@ export default function Home() {
       <main className="flex-1 pb-24 md:pb-0">
         <Hero />
         <About />
+        <Separator className="my-12 md:my-24" />
         <Experience />
+        <Separator className="my-12 md:my-24" />
         <Skills />
+        <Separator className="my-12 md:my-24" />
         <Projects />
+        <Separator className="my-12 md:my-24" />
         <Contact />
       </main>
       <Chatbot />
