@@ -2,7 +2,7 @@
 
 import { bio, socialLinks } from '@/lib/data';
 import { Button } from '@/components/ui/button';
-import { Send } from 'lucide-react';
+import { Download } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
@@ -99,9 +99,9 @@ export function Hero() {
               className="mt-10 flex flex-col items-center gap-4 sm:flex-row"
             >
               <Button asChild size="lg">
-                <Link href="#contact">
-                  Contact Me <Send className="ml-2 h-5 w-5" />
-                </Link>
+                <a href="/resume.pdf" download="Akshay-Resume.pdf">
+                  Download Resume <Download className="ml-2 h-5 w-5" />
+                </a>
               </Button>
             </motion.div>
             <motion.div
