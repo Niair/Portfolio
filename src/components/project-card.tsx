@@ -70,14 +70,14 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
               <div className="flex flex-wrap gap-2">
                 {project.metrics.slice(0, 3).map(metric => (
                   <Badge key={metric.name} variant="outline" className="font-mono">
-                    {metric.name}: {metric.value}%
+                    {metric.name}: {metric.value}{metric.name === 'Query Speed' ? 'x' : '%'}
                   </Badge>
                 ))}
               </div>
             </div>
           )}
         </CardContent>
-        <CardFooter className="flex-shrink-0 gap-2 flex-wrap">
+        <CardFooter className="flex-shrink-0 gap-2 flex-wrap bg-card pt-4">
            {project.liveDemoUrl && project.liveDemoUrl !== '#' && (
             <Button asChild size="sm">
               <a

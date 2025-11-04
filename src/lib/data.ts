@@ -128,7 +128,7 @@ export const projects: Project[] = [
     sourceCodeUrl: "#",
     youtubeUrl: "#",
     metrics: [
-      { name: "Query Speed", value: 300, fill: "var(--color-speed)" },
+      { name: "Query Speed", value: 3, fill: "var(--color-speed)" },
       { name: "Cost Savings", value: 40, fill: "var(--color-savings)" },
     ],
   },
