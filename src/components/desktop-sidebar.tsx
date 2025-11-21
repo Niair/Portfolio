@@ -1,90 +1,104 @@
 'use client';
 
-import Link from 'next/link';
-import {
-  Home,
-  User,
-  Briefcase,
-  Star,
-  BarChart3,
-  Mail,
-} from 'lucide-react';
-import {
-  TooltipProvider,
-  Tooltip,
-  TooltipTrigger,
-  TooltipContent,
-} from '@/components/ui/tooltip';
-import { usePathname } from 'next/navigation';
+import { motion } from 'framer-motion';
+import { Home, User, Briefcase, Star, FolderGit2, Mail } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 
 const navItems = [
-  { name: 'Home', href: '#hero', icon: Home },
-  { name: 'About', href: '#about', icon: User },
-  { name: 'Experience', href: '#experience', icon: Briefcase },
-  { name: 'Skills', href: '#skills', icon: Star },
-  { name: 'Projects', href: '#projects', icon: BarChart3 },
-  { name: 'Contact', href: '#contact', icon: Mail },
+  { id: 'hero', icon: Home, label: 'Home' },
+  { id: 'about', icon: User, label: 'About' },
+  { id: 'experience', icon: Briefcase, label: 'Journey' },
+  { id: 'skills', icon: Star, label: 'Skills' },
+  { id: 'projects', icon: FolderGit2, label: 'Projects' },
+  { id: 'contact', icon: Mail, label: 'Contact' },
 ];
 
 export function DesktopSidebar() {
   const [activeSection, setActiveSection] = useState('hero');
-  const [isMounted, setIsMounted] = useState(false);
-  const pathname = usePathname();
 
   useEffect(() => {
-    setIsMounted(true);
-    const handleScroll = () => {
-      const sections = navItems.map(item =>
-        document.getElementById(item.href.substring(1))
-      );
-      let currentSection = 'hero';
-
-      sections.forEach(section => {
-        if (section) {
-          const sectionTop = section.offsetTop;
-          if (window.scrollY >= sectionTop - 100) {
-            currentSection = section.id;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+            setActiveSection(entry.target.id);
           }
-        }
-      });
-      setActiveSection(currentSection);
-    };
+        });
+      },
+      {
+        threshold: [0.5],
+        rootMargin: '-20% 0px -20% 0px',
+      }
+    );
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    // Observe all sections
+    navItems.forEach((item) => {
+      const element = document.getElementById(item.id);
+      if (element) {
+        observer.observe(element);
+      }
+    });
+
+    return () => observer.disconnect();
   }, []);
 
-  if (!isMounted || pathname !== '/') {
-    return null;
-  }
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setActiveSection(id);
+    }
+  };
 
   return (
-    <aside className="fixed left-0 top-0 z-50 hidden h-screen w-16 flex-col items-center justify-center md:flex">
-      <nav className="flex flex-col items-center gap-4 px-2">
-        <TooltipProvider>
-          {navItems.map(item => (
-            <Tooltip key={item.name} delayDuration={0}>
-              <TooltipTrigger asChild>
-                <Link
-                  href={item.href}
-                  className={cn(
-                    'flex h-10 w-10 items-center justify-center rounded-lg transition-colors',
-                    activeSection === item.href.substring(1)
-                      ? 'bg-primary text-primary-foreground'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-muted'
-                  )}
-                >
-                  <item.icon className="h-5 w-5" />
-                  <span className="sr-only">{item.name}</span>
-                </Link>
-              </TooltipTrigger>
-              <TooltipContent side="right">{item.name}</TooltipContent>
-            </Tooltip>
-          ))}
-        </TooltipProvider>
+    <motion.aside
+      initial={{ x: -100 }}
+      animate={{ x: 0 }}
+      className="hidden md:flex fixed left-0 top-0 h-screen w-16 flex-col items-center justify-center gap-6 bg-card border-r z-40"
+    >
+      <nav className="flex flex-col gap-4">
+        {navItems.map((item, index) => {
+          const Icon = item.icon;
+          const isActive = activeSection === item.id;
+          
+          return (
+            <motion.button
+              key={item.id}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: index * 0.1 }}
+              onClick={() => scrollToSection(item.id)}
+              className={cn(
+                'relative group flex items-center justify-center w-12 h-12 rounded-lg transition-all duration-300',
+                isActive
+                  ? 'bg-primary text-primary-foreground shadow-lg scale-110'
+                  : 'bg-secondary/50 text-muted-foreground hover:bg-secondary hover:text-foreground hover:scale-105'
+              )}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Icon className="h-5 w-5" />
+              
+              {/* Tooltip */}
+              <span className="absolute left-full ml-4 px-3 py-2 bg-popover text-popover-foreground text-sm rounded-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-lg border">
+                {item.label}
+              </span>
+
+              {/* Active indicator */}
+              {isActive && (
+                <motion.div
+                  layoutId="activeIndicator"
+                  className="absolute left-0 w-1 h-8 bg-primary-foreground rounded-r-full"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                />
+              )}
+            </motion.button>
+          );
+        })}
       </nav>
-    </aside>
+    </motion.aside>
   );
 }

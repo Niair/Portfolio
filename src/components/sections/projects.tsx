@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils';
 const allTags = [
   'All',
   'ML',
-  'NLP',
+  'AI & NLP',
   'DL',
   'EDA',
   'MLOps',

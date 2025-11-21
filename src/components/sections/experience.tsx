@@ -1,120 +1,157 @@
 'use client';
 
+import { motion } from 'framer-motion';
+import { Briefcase, GraduationCap } from 'lucide-react';
 import { useState } from 'react';
 import { bio } from '@/lib/data';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Briefcase, GraduationCap } from 'lucide-react';
-import type { Experience as ExperienceType } from '@/lib/types';
-import { motion } from 'framer-motion';
+import { Button } from '@/components/ui/button';
 
-const experienceData = {
-  professional: bio.experience,
-  academic: [
-    {
-      company: 'University of Technology',
-      role: 'Master of Science in Data Science',
-      period: '2016 - 2018',
-      description:
-        'Focused on advanced machine learning algorithms and big data technologies.',
-    },
-    {
-      company: 'State University',
-      role: 'Bachelor of Science in Computer Science',
-      period: '2012 - 2016',
-      description:
-        'Graduated with honors, specializing in software development and database management.',
-    },
-  ],
-};
+type TabType = 'professional' | 'academic';
 
 export function Experience() {
-  const [activeTab, setActiveTab] = useState('professional');
+  const [activeTab, setActiveTab] = useState<TabType>('professional');
 
   return (
-    <section id="experience" className="py-24 sm:py-32">
-      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold tracking-tight sm:text-5xl font-headline">
-            My Journey
-          </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
+    <section id="experience" className="py-16 md:py-24 px-4 md:px-8">
+      <div className="container mx-auto max-w-4xl">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">My Journey</h2>
+          <p className="text-muted-foreground text-lg">
             A timeline of my academic and professional milestones.
           </p>
-        </div>
+        </motion.div>
 
-        <Tabs
-          value={activeTab}
-          onValueChange={setActiveTab}
-          className="w-full max-w-3xl mx-auto"
+        {/* Tab Buttons */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
+          className="flex justify-center gap-4 mb-12"
         >
-          <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 bg-card p-1.5 rounded-lg">
-            <TabsTrigger
-              value="academic"
-              className="flex items-center gap-2 text-md rounded-md py-2.5 px-4"
-            >
-              <GraduationCap className="h-5 w-5" /> Academic
-            </TabsTrigger>
-            <TabsTrigger
-              value="professional"
-              className="flex items-center gap-2 text-md rounded-md py-2.5 px-4"
-            >
-              <Briefcase className="h-5 w-5" /> Professional
-            </TabsTrigger>
-          </TabsList>
+          <Button
+            variant={activeTab === 'academic' ? 'default' : 'outline'}
+            size="lg"
+            onClick={() => setActiveTab('academic')}
+            className="gap-2"
+          >
+            <GraduationCap className="h-5 w-5" />
+            Academic
+          </Button>
+          <Button
+            variant={activeTab === 'professional' ? 'default' : 'outline'}
+            size="lg"
+            onClick={() => setActiveTab('professional')}
+            className="gap-2"
+          >
+            <Briefcase className="h-5 w-5" />
+            Professional
+          </Button>
+        </motion.div>
 
-          <TabsContent value="academic" className="mt-12">
-            <ExperienceList items={experienceData.academic} />
-          </TabsContent>
-          <TabsContent value="professional" className="mt-12">
-            <ExperienceList items={experienceData.professional} />
-          </TabsContent>
-        </Tabs>
+        {/* Content */}
+        <div className="relative">
+          {/* Vertical line */}
+          <div className="absolute left-0 md:left-8 top-0 bottom-0 w-0.5 bg-border" />
+
+          {/* Academic Tab */}
+          {activeTab === 'academic' && bio.education && (
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              className="space-y-12"
+            >
+              {bio.education.map((edu, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="relative pl-8 md:pl-20"
+                >
+                  {/* Timeline dot */}
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ once: true }}
+                    className="absolute left-0 md:left-[26px] top-2 w-4 h-4 rounded-full bg-primary border-4 border-background"
+                  />
+
+                  <div className="bg-card p-6 rounded-lg border shadow-sm hover:shadow-md transition-shadow">
+                    <div className="flex items-start justify-between gap-4 mb-3">
+                      <div>
+                        <h3 className="text-xl md:text-2xl font-bold">
+                          {edu.degree}
+                        </h3>
+                        <p className="text-lg text-muted-foreground">
+                          {edu.institution}
+                        </p>
+                      </div>
+                      <span className="text-sm bg-secondary px-3 py-1 rounded-full whitespace-nowrap">
+                        {edu.period}
+                      </span>
+                    </div>
+                    <p className="text-muted-foreground">{edu.description}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
+
+          {/* Professional Tab */}
+          {activeTab === 'professional' && (
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              className="space-y-12"
+            >
+              {bio.experience.map((exp, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="relative pl-8 md:pl-20"
+                >
+                  {/* Timeline dot */}
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ once: true }}
+                    className="absolute left-0 md:left-[26px] top-2 w-4 h-4 rounded-full bg-primary border-4 border-background"
+                  />
+
+                  <div className="bg-card p-6 rounded-lg border shadow-sm hover:shadow-md transition-shadow">
+                    <div className="flex items-start justify-between gap-4 mb-3">
+                      <div>
+                        <h3 className="text-xl md:text-2xl font-bold">
+                          {exp.role}
+                        </h3>
+                        <p className="text-lg text-muted-foreground">
+                          {exp.company}
+                        </p>
+                      </div>
+                      <span className="text-sm bg-secondary px-3 py-1 rounded-full whitespace-nowrap">
+                        {exp.period}
+                      </span>
+                    </div>
+                    <p className="text-muted-foreground">{exp.description}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
+        </div>
       </div>
     </section>
-  );
-}
-
-const formatDescription = (description: string) => {
-  const parts = description.split(/(\d+%?|3x)/g);
-  return parts.map((part, index) =>
-    part.match(/(\d+%?|3x)/g) ? (
-      <strong key={index} className="font-bold text-primary">
-        {part}
-      </strong>
-    ) : (
-      part
-    )
-  );
-};
-
-
-function ExperienceList({ items }: { items: ExperienceType[] }) {
-  return (
-    <div className="relative border-l-2 border-primary/20 pl-10">
-      {items.map((item, index) => (
-        <motion.div 
-          key={index} 
-          className="relative mb-12"
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.5, delay: index * 0.1 }}
-        >
-          <div className="absolute -left-[45.5px] top-1 flex items-center justify-center w-7 h-7 bg-primary rounded-full ring-8 ring-background">
-            <Briefcase className="w-3.5 h-3.5 text-primary-foreground" />
-          </div>
-          <div className="ml-4">
-            <p className="text-sm text-muted-foreground mb-1">{item.period}</p>
-            <h3 className="text-2xl font-bold text-foreground font-headline">{item.role}</h3>
-            <p className="text-md font-medium text-primary mt-1">{item.company}</p>
-            {item.description && (
-              <p className="mt-4 text-md text-foreground/80 leading-relaxed">
-                {formatDescription(item.description)}
-              </p>
-            )}
-          </div>
-        </motion.div>
-      ))}
-    </div>
   );
 }

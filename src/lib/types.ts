@@ -1,6 +1,32 @@
-import type { LucideIcon } from "lucide-react";
+// Update your existing types.ts file - ADD these interfaces
 
-export type Project = {
+export interface Education {
+  degree: string;
+  institution: string;
+  period: string;
+  description: string;
+}
+
+export interface Experience {
+  company: string;
+  role: string;
+  period: string;
+  description: string;
+}
+
+export interface Skill {
+  name: string;
+  level: number;
+}
+
+export interface SkillCategory {
+  category: string;
+  icon: any; // lucide-react icon
+  experience: string;
+  skills: Skill[];
+}
+
+export interface Project {
   id: string;
   title: string;
   description: string;
@@ -9,39 +35,25 @@ export type Project = {
   liveDemoUrl?: string;
   sourceCodeUrl?: string;
   youtubeUrl?: string;
-  metrics: { name: string; value: number; fill: string }[];
-};
+  metrics?: {
+    name: string;
+    value: number;
+    fill: string;
+  }[];
+}
 
-export type Skill = {
-  name: string;
-  level: number;
-};
-
-export type SkillCategory = {
-  category: string;
-  icon: LucideIcon;
-  experience: string;
-  skills: Skill[];
-};
-
-export type Experience = {
-  company: string;
-  role: string;
-  period: string;
-  description: string;
-};
-
-export type BioData = {
+export interface BioData {
   name: string;
   headline: string;
   summary: string;
   avatarImageId: string;
   skills: SkillCategory[];
   experience: Experience[];
-};
+  education?: Education[]; // ADD THIS LINE
+}
 
-export type NavItem = {
-    name: string;
-    href: string;
-    icon: LucideIcon;
+export interface Achievement {
+  title: string;
+  description: string;
+  icon: string;
 }

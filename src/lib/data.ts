@@ -86,6 +86,20 @@ export const bio: BioData = {
         "Gained hands-on experience in ML, data wrangling, and preprocessing. Built and validated end-to-end ML models using Scikit-learn, improving prediction accuracy by 10% via advanced feature selection.",
     },
   ],
+  education: [
+    {
+      degree: "Master of Computer Applications (MCA)",
+      institution: "Amity University, Noida",
+      period: "2024 - 2026 (Expected)",
+      description: "CGPA: 8.00 (current). Focusing on advanced machine learning algorithms and big data technologies.",
+    },
+    {
+      degree: "Bachelor of Computer Applications (BCA)",
+      institution: "SGTBIMIT (GGSIPU)",
+      period: "2021 - 2024",
+      description: "CGPA: 8.82. Graduated with honors, specializing in software development and database management.",
+    },
+  ],
 };
 
 export const projects: Project[] = [

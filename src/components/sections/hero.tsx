@@ -11,24 +11,34 @@ export function Hero() {
     document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const downloadResume = () => {
+    // Create a temporary link and trigger download
+    const link = document.createElement('a');
+    link.href = '/resume.pdf'; // Make sure you put Resume.pdf in public folder
+    link.download = 'Nihal_Kumar_Resume.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center px-4 md:px-8 overflow-hidden">
       {/* Animated background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-secondary/20 -z-10" />
       
-      {/* Floating particles effect */}
-      <div className="absolute inset-0 overflow-hidden -z-10">
+      {/* Floating particles effect - hidden on mobile for performance */}
+      <div className="absolute inset-0 overflow-hidden -z-10 hidden md:block">
         {[...Array(20)].map((_, i) => (
           <motion.div
             key={i}
             className="absolute w-2 h-2 bg-primary/20 rounded-full"
             initial={{
-              x: Math.random() * window.innerWidth,
-              y: Math.random() * window.innerHeight,
+              x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1000),
+              y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 800),
             }}
             animate={{
-              y: [null, Math.random() * window.innerHeight],
-              x: [null, Math.random() * window.innerWidth],
+              y: [null, Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 800)],
+              x: [null, Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1000)],
             }}
             transition={{
               duration: Math.random() * 10 + 10,
@@ -40,13 +50,13 @@ export function Hero() {
       </div>
 
       <div className="container mx-auto max-w-7xl">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
           {/* Left side - Text content */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="space-y-6"
+            className="space-y-4 md:space-y-6 order-2 md:order-1"
           >
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -55,7 +65,7 @@ export function Hero() {
               className="space-y-2"
             >
               <motion.h1 
-                className="text-5xl md:text-7xl font-bold tracking-tight"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold tracking-tight"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
@@ -78,7 +88,7 @@ export function Hero() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
-                className="flex flex-wrap gap-2 text-lg md:text-xl text-muted-foreground"
+                className="flex flex-wrap gap-2 text-base md:text-lg text-muted-foreground"
               >
                 {bio.headline.split(' | ').map((item, index) => (
                   <motion.span
@@ -86,7 +96,7 @@ export function Hero() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.6 + index * 0.1 }}
-                    className="px-3 py-1 bg-secondary rounded-full text-sm"
+                    className="px-2 md:px-3 py-1 bg-secondary rounded-full text-xs md:text-sm"
                   >
                     {item}
                   </motion.span>
@@ -98,7 +108,7 @@ export function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8 }}
-              className="text-lg md:text-xl text-muted-foreground leading-relaxed"
+              className="text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed"
             >
               {bio.summary}
             </motion.p>
@@ -108,12 +118,12 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1 }}
-              className="flex flex-wrap gap-4"
+              className="flex flex-col sm:flex-row flex-wrap gap-3 md:gap-4"
             >
               <Button
                 size="lg"
-                className="group"
-                onClick={() => window.open('/resume.pdf', '_blank')}
+                className="group w-full sm:w-auto"
+                onClick={downloadResume}
               >
                 <Download className="mr-2 h-4 w-4 group-hover:animate-bounce" />
                 Download Resume
@@ -122,8 +132,11 @@ export function Hero() {
               <Button
                 size="lg"
                 variant="outline"
-                className="group"
-                onClick={() => {/* Add intro video link */}}
+                className="group w-full sm:w-auto"
+                onClick={() => {
+                  // Add your intro video link here
+                  window.open('#', '_blank');
+                }}
               >
                 <Play className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform" />
                 Intro Video
@@ -135,7 +148,7 @@ export function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.2 }}
-              className="flex gap-4"
+              className="flex gap-3 md:gap-4 justify-center sm:justify-start"
             >
               {socialLinks.map((link, index) => {
                 const Icon = link.icon;
@@ -164,7 +177,7 @@ export function Hero() {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="relative"
+            className="relative order-1 md:order-2"
           >
             <motion.div
               animate={{
@@ -180,7 +193,7 @@ export function Hero() {
               {/* Glowing background effect */}
               <div className="absolute inset-0 bg-primary/20 rounded-full blur-3xl animate-pulse" />
               
-              <div className="relative w-full aspect-square max-w-md mx-auto">
+              <div className="relative w-full aspect-square max-w-xs sm:max-w-sm md:max-w-md mx-auto">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/40 to-primary/10 rounded-full" />
                 <Image
                   src={`https://images.unsplash.com/photo-1580893472468-01373fe4c97e?w=600&h=600&fit=crop`}
@@ -192,26 +205,28 @@ export function Hero() {
               </div>
             </motion.div>
 
-            {/* Floating tech badges */}
-            {['Python', 'ML', 'AI', 'LLM'].map((tech, index) => (
-              <motion.div
-                key={tech}
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{
-                  delay: 1.5 + index * 0.1,
-                  type: "spring",
-                }}
-                className="absolute bg-background/80 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium shadow-lg border"
-                style={{
-                  top: `${20 + index * 20}%`,
-                  right: `${index % 2 === 0 ? -20 : 'auto'}`,
-                  left: `${index % 2 === 1 ? -20 : 'auto'}`,
-                }}
-              >
-                {tech}
-              </motion.div>
-            ))}
+            {/* Floating tech badges - hidden on mobile */}
+            <div className="hidden md:block">
+              {['Python', 'ML', 'AI', 'LLM'].map((tech, index) => (
+                <motion.div
+                  key={tech}
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{
+                    delay: 1.5 + index * 0.1,
+                    type: "spring",
+                  }}
+                  className="absolute bg-background/80 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium shadow-lg border"
+                  style={{
+                    top: `${20 + index * 20}%`,
+                    right: `${index % 2 === 0 ? -20 : 'auto'}`,
+                    left: `${index % 2 === 1 ? -20 : 'auto'}`,
+                  }}
+                >
+                  {tech}
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
         </div>
       </div>
@@ -225,7 +240,7 @@ export function Hero() {
           y: { duration: 1.5, repeat: Infinity },
         }}
         onClick={scrollToAbout}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground hover:text-foreground transition-colors hidden md:flex"
       >
         <span className="text-sm">Scroll down</span>
         <ArrowDown className="h-5 w-5" />

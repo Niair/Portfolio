@@ -16,15 +16,15 @@ interface ProjectCardProps {
 export function ProjectCard({ project, index }: ProjectCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   
-  // 3D tilt effect
+  // Reduced 3D tilt effect to prevent blur
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   
-  const mouseXSpring = useSpring(x);
-  const mouseYSpring = useSpring(y);
+  const mouseXSpring = useSpring(x, { damping: 20, stiffness: 150 });
+  const mouseYSpring = useSpring(y, { damping: 20, stiffness: 150 });
   
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["7.5deg", "-7.5deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-7.5deg", "7.5deg"]);
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["3deg", "-3deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-3deg", "3deg"]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -58,18 +58,18 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
-      className="group relative"
+      className="group relative will-change-transform"
     >
       <motion.div
         className="relative bg-card rounded-xl overflow-hidden border shadow-lg hover:shadow-2xl transition-shadow"
-        whileHover={{ scale: 1.02 }}
-        transition={{ type: "spring", stiffness: 300 }}
+        whileHover={{ scale: 1.01 }}
+        transition={{ type: "spring", stiffness: 400, damping: 25 }}
       >
         {/* Image container with overlay */}
-        <div className="relative h-64 overflow-hidden">
+        <div className="relative h-64 overflow-hidden bg-muted">
           <motion.div
-            animate={{ scale: isHovered ? 1.1 : 1 }}
-            transition={{ duration: 0.6 }}
+            animate={{ scale: isHovered ? 1.05 : 1 }}
+            transition={{ duration: 0.4 }}
             className="w-full h-full"
           >
             <Image
@@ -77,12 +77,13 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
               alt={project.title}
               fill
               className="object-cover"
+              quality={90}
             />
           </motion.div>
           
           {/* Gradient overlay */}
           <motion.div
-            initial={{ opacity: 0 }}
+            initial={{ opacity: 0.6 }}
             animate={{ opacity: isHovered ? 0.9 : 0.6 }}
             className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent"
           />
@@ -129,12 +130,9 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
         {/* Content */}
         <div className="p-6 space-y-4">
           <div>
-            <motion.h3
-              className="text-2xl font-bold mb-2 group-hover:text-primary transition-colors"
-              layoutId={`title-${project.id}`}
-            >
+            <h3 className="text-2xl font-bold mb-2 group-hover:text-primary transition-colors">
               {project.title}
-            </motion.h3>
+            </h3>
             <p className="text-muted-foreground line-clamp-3">
               {project.description}
             </p>
@@ -234,17 +232,12 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
         </motion.div>
       </motion.div>
 
-      {/* 3D shadow effect */}
+      {/* Reduced 3D shadow effect */}
       <motion.div
-        className="absolute inset-0 bg-primary/20 rounded-xl blur-xl -z-10"
-        style={{
-          rotateX,
-          rotateY,
-          transformStyle: "preserve-3d",
-        }}
+        className="absolute inset-0 bg-primary/10 rounded-xl blur-xl -z-10"
         animate={{
-          opacity: isHovered ? 0.6 : 0,
-          scale: isHovered ? 1.05 : 1,
+          opacity: isHovered ? 0.4 : 0,
+          scale: isHovered ? 1.02 : 1,
         }}
       />
     </motion.div>
