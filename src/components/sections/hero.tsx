@@ -1,120 +1,235 @@
 'use client';
 
-import { bio } from '@/lib/data';
-import { Button } from '@/components/ui/button';
-import { Download, Play, Mouse } from 'lucide-react';
-import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { ArrowDown, Download, Play } from 'lucide-react';
 import Image from 'next/image';
-import { getPlaceholderImage } from '@/lib/placeholder-images';
+import { Button } from '@/components/ui/button';
+import { bio, socialLinks } from '@/lib/data';
 
 export function Hero() {
-  const avatarImage = getPlaceholderImage(bio.avatarImageId);
+  const scrollToAbout = () => {
+    document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
-    <section
-      id="hero"
-      className="relative flex min-h-[calc(100vh-5rem)] w-full items-center justify-center overflow-hidden pt-16 pb-24 sm:pt-0 sm:pb-0"
-    >
-      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-24">
-          
+    <section id="hero" className="relative min-h-screen flex items-center justify-center px-4 md:px-8 overflow-hidden">
+      {/* Animated background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-secondary/20 -z-10" />
+      
+      {/* Floating particles effect */}
+      <div className="absolute inset-0 overflow-hidden -z-10">
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-2 h-2 bg-primary/20 rounded-full"
+            initial={{
+              x: Math.random() * window.innerWidth,
+              y: Math.random() * window.innerHeight,
+            }}
+            animate={{
+              y: [null, Math.random() * window.innerHeight],
+              x: [null, Math.random() * window.innerWidth],
+            }}
+            transition={{
+              duration: Math.random() * 10 + 10,
+              repeat: Infinity,
+              repeatType: "reverse",
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="container mx-auto max-w-7xl">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          {/* Left side - Text content */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            className="space-y-6"
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="space-y-2"
+            >
+              <motion.h1 
+                className="text-5xl md:text-7xl font-bold tracking-tight"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+              >
+                Hi, I'm <span className="text-primary">{bio.name}</span>
+                <motion.span
+                  animate={{ rotate: [0, 14, -8, 14, -4, 10, 0] }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    repeatDelay: 1,
+                  }}
+                  className="inline-block origin-bottom-right ml-2"
+                >
+                  👋
+                </motion.span>
+              </motion.h1>
+              
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+                className="flex flex-wrap gap-2 text-lg md:text-xl text-muted-foreground"
+              >
+                {bio.headline.split(' | ').map((item, index) => (
+                  <motion.span
+                    key={index}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6 + index * 0.1 }}
+                    className="px-3 py-1 bg-secondary rounded-full text-sm"
+                  >
+                    {item}
+                  </motion.span>
+                ))}
+              </motion.div>
+            </motion.div>
+
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.8 }}
+              className="text-lg md:text-xl text-muted-foreground leading-relaxed"
+            >
+              {bio.summary}
+            </motion.p>
+
+            {/* CTA Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1 }}
+              className="flex flex-wrap gap-4"
+            >
+              <Button
+                size="lg"
+                className="group"
+                onClick={() => window.open('/resume.pdf', '_blank')}
+              >
+                <Download className="mr-2 h-4 w-4 group-hover:animate-bounce" />
+                Download Resume
+              </Button>
+              
+              <Button
+                size="lg"
+                variant="outline"
+                className="group"
+                onClick={() => {/* Add intro video link */}}
+              >
+                <Play className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform" />
+                Intro Video
+              </Button>
+            </motion.div>
+
+            {/* Social Links */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.2 }}
+              className="flex gap-4"
+            >
+              {socialLinks.map((link, index) => {
+                const Icon = link.icon;
+                return (
+                  <motion.a
+                    key={link.name}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.2, rotate: 5 }}
+                    whileTap={{ scale: 0.9 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.3 + index * 0.1 }}
+                    className="p-3 rounded-full bg-secondary hover:bg-primary hover:text-primary-foreground transition-colors"
+                  >
+                    <Icon className="h-5 w-5" />
+                  </motion.a>
+                );
+              })}
+            </motion.div>
+          </motion.div>
+
+          {/* Right side - Image */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-            className="relative col-span-1 mx-auto flex justify-center lg:order-last lg:col-span-5"
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="relative"
           >
-            <div className="relative w-80 h-80 lg:w-96 lg:h-96">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-transparent rounded-full -z-10 blur-3xl"></div>
-              {avatarImage && (
-                <div className="relative mx-auto w-72 h-72 lg:w-80 lg:h-80 rounded-full overflow-hidden shadow-2xl border-4 border-background">
-                  <Image
-                    src={avatarImage.imageUrl}
-                    alt={`${bio.name} - ${bio.headline}`}
-                    fill
-                    sizes="(max-width: 768px) 70vw, 320px"
-                    data-ai-hint={avatarImage.imageHint}
-                    className="relative object-cover"
-                    priority
-                  />
-                </div>
-              )}
-            </div>
-          </motion.div>
-
-          <div className="col-span-1 flex flex-col items-center text-center lg:col-span-7 lg:items-start lg:text-left">
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="text-5xl font-bold tracking-tight text-foreground sm:text-7xl lg:text-8xl font-headline"
-            >
-              Hi, I'm {bio.name.split(' ')[0]}{' '}
-              <span className="inline-block animate-wave origin-[70%_70%]">👋</span>
-            </motion.h1>
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-              className="mt-6 flex flex-wrap items-center justify-center lg:justify-start gap-x-4 text-lg text-foreground/80"
+              animate={{
+                y: [0, -20, 0],
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                repeatType: "reverse",
+              }}
+              className="relative"
             >
-              <h3 className="font-semibold">Data Scientist</h3>
-              <span className="text-muted-foreground hidden sm:inline-block">|</span>
-              <h3 className="font-semibold">Software Engineer</h3>
-               <span className="text-muted-foreground hidden sm:inline-block">|</span>
-              <h3 className="font-semibold">AI Specialist</h3>
+              {/* Glowing background effect */}
+              <div className="absolute inset-0 bg-primary/20 rounded-full blur-3xl animate-pulse" />
+              
+              <div className="relative w-full aspect-square max-w-md mx-auto">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/40 to-primary/10 rounded-full" />
+                <Image
+                  src={`https://images.unsplash.com/photo-1580893472468-01373fe4c97e?w=600&h=600&fit=crop`}
+                  alt={bio.name}
+                  fill
+                  className="rounded-full object-cover border-4 border-background shadow-2xl"
+                  priority
+                />
+              </div>
             </motion.div>
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.7 }}
-              className="mt-4 max-w-xl text-lg text-foreground/80"
-            >
-               I'm a passionate data scientist with a knack for turning complex datasets into actionable insights.
-            </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.8 }}
-              className="mt-10 flex flex-col items-center gap-4 sm:flex-row"
-            >
-              <Button asChild size="lg">
-                <a href="/resume.pdf" download="Akshay-Resume.pdf">
-                  Download Resume <Download className="ml-2 h-5 w-5" />
-                </a>
-              </Button>
-              <Button asChild size="lg" variant="outline">
-                <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer">
-                  Intro Video <Play className="ml-2 h-5 w-5" />
-                </a>
-              </Button>
-            </motion.div>
-          </div>
-        </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.2 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:block"
-        >
-          <Link
-            href="#about"
-            aria-label="Scroll to about section"
-            className="flex items-center gap-2 text-muted-foreground transition-colors hover:text-foreground"
-          >
-            <div className="relative w-6 h-10 rounded-full border-2 border-muted-foreground/50">
+            {/* Floating tech badges */}
+            {['Python', 'ML', 'AI', 'LLM'].map((tech, index) => (
               <motion.div
-                className="absolute top-2 left-1/2 -translate-x-1/2 w-1.5 h-3 rounded-full bg-muted-foreground/50"
-                animate={{ y: [0, 12, 0] }}
-                transition={{ duration: 2, repeat: Infinity, repeatType: 'loop' }}
-              />
-            </div>
-            <span className="text-sm">Scroll down</span>
-          </Link>
-        </motion.div>
+                key={tech}
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{
+                  delay: 1.5 + index * 0.1,
+                  type: "spring",
+                }}
+                className="absolute bg-background/80 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium shadow-lg border"
+                style={{
+                  top: `${20 + index * 20}%`,
+                  right: `${index % 2 === 0 ? -20 : 'auto'}`,
+                  left: `${index % 2 === 1 ? -20 : 'auto'}`,
+                }}
+              >
+                {tech}
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
       </div>
+
+      {/* Scroll indicator */}
+      <motion.button
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, y: [0, 10, 0] }}
+        transition={{
+          opacity: { delay: 2 },
+          y: { duration: 1.5, repeat: Infinity },
+        }}
+        onClick={scrollToAbout}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+      >
+        <span className="text-sm">Scroll down</span>
+        <ArrowDown className="h-5 w-5" />
+      </motion.button>
     </section>
   );
 }
