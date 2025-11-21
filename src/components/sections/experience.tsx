@@ -34,7 +34,7 @@ export function Experience() {
     <section id="experience" className="py-24 sm:py-32">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold tracking-tight sm:text-5xl">
+          <h2 className="text-4xl font-bold tracking-tight sm:text-5xl font-headline">
             My Journey
           </h2>
           <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
@@ -105,7 +105,7 @@ function ExperienceList({ items }: { items: ExperienceType[] }) {
           </div>
           <div className="ml-4">
             <p className="text-sm text-muted-foreground mb-1">{item.period}</p>
-            <h3 className="text-2xl font-bold text-foreground">{item.role}</h3>
+            <h3 className="text-2xl font-bold text-foreground font-headline">{item.role}</h3>
             <p className="text-md font-medium text-primary mt-1">{item.company}</p>
             {item.description && (
               <p className="mt-4 text-md text-foreground/80 leading-relaxed">

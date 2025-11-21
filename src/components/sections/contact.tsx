@@ -55,10 +55,10 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="py-16 sm:py-32">
+    <section id="contact" className="py-24 sm:py-32">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-5xl">
+          <h2 className="text-4xl font-bold tracking-tight sm:text-5xl font-headline">
             Get In Touch
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
@@ -71,10 +71,10 @@ export function Contact() {
                 <Link href="mailto:akshay.data@example.com"><Mail className="mr-2 h-4 w-4" /> Email</Link>
             </Button>
             <Button asChild variant="outline" aria-label="LinkedIn">
-                <Link href="#"><Linkedin className="mr-2 h-4 w-4" /> LinkedIn</Link>
+                <Link href="https://linkedin.com"><Linkedin className="mr-2 h-4 w-4" /> LinkedIn</Link>
             </Button>
             <Button asChild variant="outline" aria-label="GitHub">
-                <Link href="#"><Github className="mr-2 h-4 w-4" /> GitHub</Link>
+                <Link href="https://github.com"><Github className="mr-2 h-4 w-4" /> GitHub</Link>
             </Button>
         </div>
 

@@ -14,7 +14,7 @@ export function Skills() {
     <section id="skills" className="py-24 sm:py-32">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold tracking-tight sm:text-5xl">
+          <h2 className="text-4xl font-bold tracking-tight sm:text-5xl font-headline">
             Technical Skills
           </h2>
           <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
@@ -39,7 +39,7 @@ export function Skills() {
                       <skillCategory.icon className="h-6 w-6" />
                     </div>
                     <div className="text-left">
-                      <h3 className="text-xl font-bold">
+                      <h3 className="text-xl font-bold font-headline">
                         {skillCategory.category}
                       </h3>
                       <p className="text-sm text-muted-foreground">{skillCategory.experience}</p>

@@ -11,7 +11,7 @@ export function About() {
     <section id="about" className="py-24 sm:py-32">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold tracking-tight sm:text-5xl">
+          <h2 className="text-4xl font-bold tracking-tight sm:text-5xl font-headline">
             About Me
           </h2>
           <p className="text-lg text-muted-foreground mt-4 max-w-2xl mx-auto">

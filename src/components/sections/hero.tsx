@@ -48,7 +48,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="text-5xl font-bold tracking-tight text-foreground sm:text-7xl lg:text-8xl"
+              className="text-5xl font-bold tracking-tight text-foreground sm:text-7xl lg:text-8xl font-headline"
             >
               Hi, I'm {bio.name.split(' ')[0]}{' '}
               <span className="inline-block animate-wave origin-[70%_70%]">👋</span>
