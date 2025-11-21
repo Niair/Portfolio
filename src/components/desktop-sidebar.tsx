@@ -61,7 +61,7 @@ export function DesktopSidebar() {
   }
 
   return (
-    <aside className="fixed left-0 top-0 z-50 hidden h-screen w-16 flex-col items-center justify-center border-r bg-background md:flex">
+    <aside className="fixed left-0 top-0 z-50 hidden h-screen w-16 flex-col items-center justify-center md:flex">
       <nav className="flex flex-col items-center gap-4 px-2">
         <TooltipProvider>
           {navItems.map(item => (
