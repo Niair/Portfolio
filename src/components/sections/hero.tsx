@@ -18,25 +18,11 @@ export function Hero() {
     >
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 1.2 }}
-            className="hidden lg:col-span-1 lg:flex flex-col items-center gap-6"
+          <div
+            className="hidden lg:col-span-1 lg:flex"
           >
-            {socialLinks.map(link => (
-              <a
-                key={link.name}
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-foreground/60 transition-colors hover:text-primary"
-                aria-label={link.name}
-              >
-                <link.icon className="h-6 w-6" />
-              </a>
-            ))}
-          </motion.div>
+           {/* This space is reserved */}
+          </div>
 
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
@@ -69,7 +55,7 @@ export function Hero() {
               transition={{ duration: 0.5, delay: 0.4 }}
               className="text-4xl font-bold tracking-tight text-foreground sm:text-6xl lg:text-7xl"
             >
-              Hi, I&apos;m {bio.name.split(' ')[0]}{' '}
+              Hi, I'm {bio.name.split(' ')[0]}{' '}
               <span className="inline-block animate-wave origin-[70%_70%]">👋</span>
             </motion.h1>
             <motion.div
@@ -90,7 +76,7 @@ export function Hero() {
               transition={{ duration: 0.5, delay: 0.9 }}
               className="mt-4 max-w-xl text-lg text-foreground/80"
             >
-               I&apos;m a passionate data scientist with a knack for turning complex datasets into actionable insights.
+               I'm a passionate data scientist with a knack for turning complex datasets into actionable insights.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
