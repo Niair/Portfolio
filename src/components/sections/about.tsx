@@ -38,7 +38,7 @@ export function About() {
           </div>
           <div className="lg:col-span-3">
             <p className="text-xl text-foreground/80 leading-relaxed">
-              I&apos;m a passionate data scientist turning complex datasets into actionable insights through machine learning and data visualization. I am always excited to tackle new challenges and build innovative data-driven solutions.
+              I'm a passionate data scientist turning complex datasets into actionable insights through machine learning and data visualization. I am always excited to tackle new challenges and build innovative data-driven solutions.
             </p>
             <div className="mt-8 flex flex-wrap gap-2">
               <span className="inline-flex items-center rounded-lg bg-secondary px-3 py-1.5 text-sm font-medium text-secondary-foreground">Machine Learning</span>
