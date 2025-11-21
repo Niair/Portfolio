@@ -17,7 +17,7 @@ export function Hero() {
       className="relative flex min-h-[calc(100vh-5rem)] w-full items-center justify-center overflow-hidden pt-16 pb-24 sm:pt-0 sm:pb-0"
     >
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
+        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-24">
           
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}

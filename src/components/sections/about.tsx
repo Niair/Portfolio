@@ -19,7 +19,7 @@ export function About() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-24 items-center">
           <div className="lg:col-span-2 flex justify-center">
             {aboutImage && (
               <div className="relative w-80 h-96 rounded-2xl overflow-hidden shadow-2xl transform transition-transform duration-500 hover:scale-105 hover:shadow-primary/20">
