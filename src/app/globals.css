@@ -83,6 +83,10 @@
     @apply bg-background text-foreground;
   }
   section {
-    @apply scroll-m-20;
+    @apply scroll-mt-20;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-headline;
   }
 }

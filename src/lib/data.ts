@@ -1,5 +1,6 @@
 import type { Project, BioData } from "@/lib/types";
-import { BarChart3, BrainCircuit, Cloud, Code, Database, GanttChart, Github, Linkedin, Mail, Pyramid, Server, Twitter } from "lucide-react";
+import { BrainCircuit, Code, Pyramid } from "lucide-react";
+import { Github, Linkedin, Twitter } from 'lucide-react';
 
 export const bio: BioData = {
   name: "Akshay",
@@ -77,9 +78,9 @@ export const projects: Project[] = [
       "A machine learning model to predict customer churn for a subscription-based service. The model helps in identifying at-risk customers, allowing for proactive retention strategies.",
     tags: ["ML", "Python", "Scikit-learn"],
     imageId: "project1",
-    liveDemoUrl: "https://example.com/live-demo-1",
-    sourceCodeUrl: "https://github.com/example/churn-prediction",
-    youtubeUrl: "https://youtube.com/watch?v=example1",
+    liveDemoUrl: "https://example.com",
+    sourceCodeUrl: "https://github.com/example/repo",
+    youtubeUrl: "https://youtube.com/watch?v=example",
     metrics: [
       { name: "Accuracy", value: 92, fill: "var(--color-accuracy)" },
       { name: "Precision", value: 88, fill: "var(--color-precision)" },
@@ -93,9 +94,9 @@ export const projects: Project[] = [
       "An interactive dashboard built with Streamlit that provides real-time sales forecasting. It uses time-series analysis to predict future sales trends.",
     tags: ["Data Visualization", "Time Series", "Streamlit", "EDA"],
     imageId: "project2",
-    liveDemoUrl: "https://example.com/live-demo-2",
-    sourceCodeUrl: "https://github.com/example/sales-dashboard",
-    youtubeUrl: "https://youtube.com/watch?v=example2",
+    liveDemoUrl: "https://example.com",
+    sourceCodeUrl: "https://github.com/example/repo",
+    youtubeUrl: "https://youtube.com/watch?v=example",
     metrics: [
         { name: "MAE", value: 5, fill: "var(--color-mae)" },
         { name: "RMSE", value: 7, fill: "var(--color-rmse)" },
@@ -109,9 +110,9 @@ export const projects: Project[] = [
       "A natural language processing (NLP) project to analyze customer reviews and classify them as positive, negative, or neutral. This helps businesses gauge customer satisfaction.",
     tags: ["NLP", "DL", "FastAPI", "TensorFlow"],
     imageId: "project3",
-    liveDemoUrl: "https://example.com/live-demo-3",
-    sourceCodeUrl: "https://github.com/example/sentiment-analysis",
-    youtubeUrl: "https://youtube.com/watch?v=example3",
+    liveDemoUrl: "https://example.com",
+    sourceCodeUrl: "https://github.com/example/repo",
+    youtubeUrl: "https://youtube.com/watch?v=example",
     metrics: [
       { name: "F1-Score", value: 95, fill: "var(--color-f1)" },
       { name: "Accuracy", value: 97, fill: "var(--color-accuracy)" },
@@ -124,9 +125,9 @@ export const projects: Project[] = [
       "Designed and deployed a scalable data warehouse on AWS and an MLOps pipeline for model deployment. This project streamlined data access and improved query performance by 3x.",
     tags: ["Cloud", "Data Engineering", "AWS", "MLOps"],
     imageId: "project4",
-    liveDemoUrl: "https://example.com/live-demo-4",
-    sourceCodeUrl: "https://github.com/example/data-warehouse",
-    youtubeUrl: "https://youtube.com/watch?v=example4",
+    liveDemoUrl: "https://example.com",
+    sourceCodeUrl: "https://github.com/example/repo",
+    youtubeUrl: "https://youtube.com/watch?v=example",
     metrics: [
       { name: "Query Speed", value: 3, fill: "var(--color-speed)" },
       { name: "Cost Savings", value: 40, fill: "var(--color-savings)" },
@@ -135,7 +136,7 @@ export const projects: Project[] = [
 ];
 
 export const socialLinks = [
-    { name: "GitHub", url: "#", icon: Github },
-    { name: "LinkedIn", url: "#", icon: Linkedin },
-    { name: "Twitter", url: "#", icon: Twitter },
+    { name: "GitHub", url: "https://github.com", icon: Github },
+    { name: "LinkedIn", url: "https://linkedin.com", icon: Linkedin },
+    { name: "Twitter", url: "https://twitter.com", icon: Twitter },
 ];
