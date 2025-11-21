@@ -8,7 +8,7 @@ export default function Header() {
   return (
     <header
       className={cn(
-        'fixed top-0 z-50 w-full bg-background/80 backdrop-blur-sm'
+        'fixed top-0 z-50 w-full'
       )}
     >
       <div className="container mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -16,7 +16,7 @@ export default function Header() {
           <span className="font-semibold text-lg">Akshay</span>
         </Link>
         <div className="flex items-center gap-4">
-           <div className="hidden md:flex items-center gap-4">
+           <div className="flex items-center gap-4">
             {socialLinks.map(link => (
               <a
                 key={link.name}
