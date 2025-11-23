@@ -15,7 +15,7 @@ const playfairDisplay = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: 'Akshay | AI Engineer',
+  title: 'Nihal | AI Engineer',
   description: 'Welcome to my data science portfolio.',
 };
 

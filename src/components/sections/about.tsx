@@ -25,7 +25,7 @@ export function About() {
               <div className="relative w-80 h-96 rounded-2xl overflow-hidden shadow-2xl transform transition-transform duration-500 hover:scale-105 hover:shadow-primary/20">
                 <Image
                   src={aboutImage.imageUrl}
-                  alt="A professional portrait of Akshay"
+                  alt="A professional portrait of Nihal"
                   fill
                   sizes="(max-width: 1024px) 80vw, 320px"
                   data-ai-hint={aboutImage.imageHint}
