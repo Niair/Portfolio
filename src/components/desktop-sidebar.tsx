@@ -56,11 +56,9 @@ export function DesktopSidebar() {
     <motion.aside
       initial={{ x: -100 }}
       animate={{ x: 0 }}
-      className="hidden md:flex fixed left-0 top-0 h-screen w-16 flex-col items-center justify-between gap-6 py-10 border-r z-40 bg-transparent"
+      className="hidden md:flex fixed left-0 top-0 h-screen w-16 flex-col items-center justify-center gap-6 py-10 border-r z-40 bg-transparent"
     >
-      <Link href="/" className="flex items-center justify-center h-16">
-        <span className="font-semibold text-lg" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>Akshay</span>
-      </Link>
+      <div className="h-16" /> {/* Spacer to balance the bottom */}
       
       <nav className="flex flex-col gap-4">
         {navItems.map((item, index) => {
