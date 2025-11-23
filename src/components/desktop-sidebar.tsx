@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Home, User, Briefcase, Star, FolderGit2, Mail } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
+import Link from 'next/link';
 
 const navItems = [
   { id: 'hero', icon: Home, label: 'Home' },
@@ -55,8 +56,12 @@ export function DesktopSidebar() {
     <motion.aside
       initial={{ x: -100 }}
       animate={{ x: 0 }}
-      className="hidden md:flex fixed left-0 top-0 h-screen w-16 flex-col items-center justify-center gap-6 bg-card border-r z-40"
+      className="hidden md:flex fixed left-0 top-0 h-screen w-16 flex-col items-center justify-between gap-6 py-10 border-r z-40 bg-transparent"
     >
+      <Link href="/" className="flex items-center justify-center h-16">
+        <span className="font-semibold text-lg" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>Akshay</span>
+      </Link>
+      
       <nav className="flex flex-col gap-4">
         {navItems.map((item, index) => {
           const Icon = item.icon;
@@ -89,7 +94,7 @@ export function DesktopSidebar() {
               {isActive && (
                 <motion.div
                   layoutId="activeIndicator"
-                  className="absolute left-0 w-1 h-8 bg-primary-foreground rounded-r-full"
+                  className="absolute left-0 w-1 h-8 bg-primary rounded-r-full"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ type: 'spring', stiffness: 300, damping: 30 }}
@@ -99,6 +104,7 @@ export function DesktopSidebar() {
           );
         })}
       </nav>
+      <div className="h-16" /> {/* Spacer to balance the top logo */}
     </motion.aside>
   );
 }
