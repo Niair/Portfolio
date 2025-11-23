@@ -3,6 +3,7 @@
 import { socialLinks } from '@/lib/data';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
+import { ThemeToggle } from './theme-toggle';
 
 export default function Header() {
   return (
@@ -30,6 +31,7 @@ export default function Header() {
               </a>
             ))}
           </div>
+          <ThemeToggle />
           <div className="md:hidden">
             {/* The mobile navigation is now handled by the bottom-nav component */}
           </div>
