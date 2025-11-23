@@ -5,6 +5,8 @@ import { ArrowDown, Download, Play } from 'lucide-react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { bio, socialLinks } from '@/lib/data';
+import { getPlaceholderImage } from '@/lib/placeholder-images';
+import Link from 'next/link';
 
 export function Hero() {
   const scrollToAbout = () => {
@@ -20,6 +22,8 @@ export function Hero() {
     link.click();
     document.body.removeChild(link);
   };
+  
+  const avatarImage = getPlaceholderImage(bio.avatarImageId);
 
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center px-4 md:px-8 overflow-hidden">
@@ -133,43 +137,15 @@ export function Hero() {
                 size="lg"
                 variant="outline"
                 className="group w-full sm:w-auto"
-                onClick={() => {
-                  // Add your intro video link here
-                  window.open('#', '_blank');
-                }}
+                asChild
               >
-                <Play className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform" />
-                Intro Video
+                <Link href="#" target="_blank">
+                  <Play className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform" />
+                  Intro Video
+                </Link>
               </Button>
             </motion.div>
 
-            {/* Social Links */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.2 }}
-              className="flex gap-3 md:gap-4 justify-center sm:justify-start"
-            >
-              {socialLinks.map((link, index) => {
-                const Icon = link.icon;
-                return (
-                  <motion.a
-                    key={link.name}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ scale: 1.2, rotate: 5 }}
-                    whileTap={{ scale: 0.9 }}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 1.3 + index * 0.1 }}
-                    className="p-3 rounded-full bg-secondary hover:bg-primary hover:text-primary-foreground transition-colors"
-                  >
-                    <Icon className="h-5 w-5" />
-                  </motion.a>
-                );
-              })}
-            </motion.div>
           </motion.div>
 
           {/* Right side - Image */}
@@ -195,13 +171,17 @@ export function Hero() {
               
               <div className="relative w-full aspect-square max-w-xs sm:max-w-sm md:max-w-md mx-auto">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/40 to-primary/10 rounded-full" />
-                <Image
-                  src={`https://images.unsplash.com/photo-1580893472468-01373fe4c97e?w=600&h=600&fit=crop`}
-                  alt={bio.name}
-                  fill
-                  className="rounded-full object-cover border-4 border-background shadow-2xl"
-                  priority
-                />
+                {avatarImage && (
+                  <Image
+                    src={avatarImage.imageUrl}
+                    alt={bio.name}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="rounded-full object-cover border-4 border-background shadow-2xl"
+                    priority
+                    data-ai-hint={avatarImage.imageHint}
+                  />
+                )}
               </div>
             </motion.div>
 

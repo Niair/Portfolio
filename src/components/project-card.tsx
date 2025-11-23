@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import type { Project } from '@/lib/types';
+import { getPlaceholderImage } from '@/lib/placeholder-images';
 
 interface ProjectCardProps {
   project: Project;
@@ -43,6 +44,8 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
     y.set(0);
     setIsHovered(false);
   };
+  
+  const projectImage = getPlaceholderImage(project.imageId);
 
   return (
     <motion.div
@@ -72,13 +75,17 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
             transition={{ duration: 0.4 }}
             className="w-full h-full"
           >
-            <Image
-              src={`https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=400&fit=crop`}
-              alt={project.title}
-              fill
-              className="object-cover"
-              quality={90}
-            />
+            {projectImage && (
+              <Image
+                src={projectImage.imageUrl}
+                alt={project.title}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className="object-cover"
+                quality={90}
+                data-ai-hint={projectImage.imageHint}
+              />
+            )}
           </motion.div>
           
           {/* Gradient overlay */}
@@ -99,9 +106,11 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
                 size="icon"
                 variant="secondary"
                 className="rounded-full backdrop-blur-sm"
-                onClick={() => window.open(project.liveDemoUrl, '_blank')}
+                asChild
               >
-                <ExternalLink className="h-4 w-4" />
+                <a href={project.liveDemoUrl} target="_blank" rel="noopener noreferrer">
+                  <ExternalLink className="h-4 w-4" />
+                </a>
               </Button>
             )}
             {project.sourceCodeUrl && (
@@ -109,9 +118,11 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
                 size="icon"
                 variant="secondary"
                 className="rounded-full backdrop-blur-sm"
-                onClick={() => window.open(project.sourceCodeUrl, '_blank')}
+                asChild
               >
-                <Github className="h-4 w-4" />
+                <a href={project.sourceCodeUrl} target="_blank" rel="noopener noreferrer">
+                  <Github className="h-4 w-4" />
+                </a>
               </Button>
             )}
             {project.youtubeUrl && (
@@ -119,9 +130,11 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
                 size="icon"
                 variant="secondary"
                 className="rounded-full backdrop-blur-sm"
-                onClick={() => window.open(project.youtubeUrl, '_blank')}
+                asChild
               >
-                <Youtube className="h-4 w-4" />
+                <a href={project.youtubeUrl} target="_blank" rel="noopener noreferrer">
+                  <Youtube className="h-4 w-4" />
+                </a>
               </Button>
             )}
           </motion.div>
@@ -193,20 +206,24 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
             {project.liveDemoUrl && (
               <Button
                 className="flex-1 group/btn"
-                onClick={() => window.open(project.liveDemoUrl, '_blank')}
+                asChild
               >
-                <ExternalLink className="mr-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
-                Live Demo
+                <a href={project.liveDemoUrl} target="_blank" rel="noopener noreferrer">
+                  <ExternalLink className="mr-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
+                  Live Demo
+                </a>
               </Button>
             )}
             {project.sourceCodeUrl && (
               <Button
                 variant="outline"
                 className="flex-1 group/btn"
-                onClick={() => window.open(project.sourceCodeUrl, '_blank')}
+                asChild
               >
-                <Github className="mr-2 h-4 w-4 group-hover/btn:rotate-12 transition-transform" />
-                Source Code
+                <a href={project.sourceCodeUrl} target="_blank" rel="noopener noreferrer">
+                  <Github className="mr-2 h-4 w-4 group-hover/btn:rotate-12 transition-transform" />
+                  Source Code
+                </a>
               </Button>
             )}
           </div>
