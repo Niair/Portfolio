@@ -4,6 +4,7 @@ import { socialLinks } from '@/lib/data';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { ThemeToggle } from './theme-toggle';
+import { Filter } from 'lucide-react';
 
 export default function Header() {
   return (
@@ -13,8 +14,9 @@ export default function Header() {
       )}
     >
       <div className="container mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="font-bold text-2xl font-headline">
-          Nihal
+        <Link href="/" className="flex items-center gap-2 font-bold text-2xl font-headline group">
+          <Filter className="h-6 w-6 text-primary animate-pulse-glow" />
+          <span className="lowercase">nihal</span>
         </Link>
         <div className="flex items-center gap-4">
            <div className="flex items-center gap-4">
