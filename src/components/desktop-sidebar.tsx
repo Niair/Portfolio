@@ -56,7 +56,7 @@ export function DesktopSidebar() {
     <motion.aside
       initial={{ x: -100 }}
       animate={{ x: 0 }}
-      className="hidden md:flex fixed left-0 top-0 h-screen w-16 flex-col items-center justify-center gap-6 py-10 border-r z-40 bg-transparent"
+      className="hidden md:flex fixed left-0 top-0 h-screen w-16 flex-col items-center justify-center gap-6 py-10 z-40 bg-transparent"
     >
       <div className="h-16" /> {/* Spacer to balance the bottom */}
       
@@ -76,7 +76,7 @@ export function DesktopSidebar() {
                 'relative group flex items-center justify-center w-12 h-12 rounded-lg transition-all duration-300',
                 isActive
                   ? 'bg-primary text-primary-foreground shadow-lg scale-110'
-                  : 'bg-secondary/50 text-muted-foreground hover:bg-secondary hover:text-foreground hover:scale-105'
+                  : 'bg-background/50 border border-border/20 text-muted-foreground hover:bg-secondary hover:text-foreground hover:scale-105 backdrop-blur-sm'
               )}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
