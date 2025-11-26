@@ -1,5 +1,7 @@
 // Update your existing types.ts file - ADD these interfaces
 
+import type { LucideIcon } from "lucide-react";
+
 export interface Education {
   degree: string;
   institution: string;
@@ -21,7 +23,7 @@ export interface Skill {
 
 export interface SkillCategory {
   category: string;
-  icon: any; // lucide-react icon
+  icon: LucideIcon; // lucide-react icon
   experience: string;
   skills: Skill[];
 }
@@ -40,6 +42,10 @@ export interface Project {
     value: number;
     fill: string;
   }[];
+  techStack?: {
+    name: string;
+    level: number;
+  }[];
 }
 
 export interface BioData {
@@ -49,7 +55,7 @@ export interface BioData {
   avatarImageId: string;
   skills: SkillCategory[];
   experience: Experience[];
-  education?: Education[]; // ADD THIS LINE
+  education?: Education[];
 }
 
 export interface Achievement {

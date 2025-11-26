@@ -19,6 +19,28 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
   
   const projectImage = getPlaceholderImage(project.imageId);
 
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const springX = useSpring(x, { stiffness: 220, damping: 20, mass: 0.4 });
+  const springY = useSpring(y, { stiffness: 220, damping: 20, mass: 0.4 });
+
+  const rotateX = useTransform(springY, [-40, 40], [8, -8]);
+  const rotateY = useTransform(springX, [-40, 40], [-8, 8]);
+
+  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const relX = event.clientX - (bounds.left + bounds.width / 2);
+    const relY = event.clientY - (bounds.top + bounds.height / 2);
+
+    x.set(relX);
+    y.set(relY);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
@@ -26,16 +48,27 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseLeave={() => {
+        setIsHovered(false);
+        handleMouseLeave();
+      }}
       className="group relative"
     >
       <motion.div
-        className="relative bg-card rounded-xl overflow-hidden border shadow-lg hover:shadow-2xl transition-shadow"
+        className="relative overflow-hidden rounded-xl border bg-card/95 shadow-lg backdrop-blur-md transition-all duration-300 group-hover:bg-card/60 group-hover:shadow-2xl group-hover:border-primary/30"
         whileHover={{ scale: 1.02 }}
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        transition={{ type: "spring", stiffness: 300, damping: 22 }}
+        style={{ rotateX, rotateY, transformPerspective: 900 }}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
       >
         {/* Image container with overlay */}
         <div className="relative h-64 overflow-hidden bg-muted">
+          {project.liveDemoUrl && (
+            <span className="absolute left-4 top-4 z-10 rounded-full bg-emerald-500/90 px-3 py-1 text-xs font-semibold text-emerald-50 shadow-md">
+              Live Demo
+            </span>
+          )}
           <motion.div
             animate={{ scale: isHovered ? 1.05 : 1 }}
             transition={{ duration: 0.4 }}
@@ -133,6 +166,32 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
             ))}
           </div>
 
+          {/* Tech stack proficiency */}
+          {project.techStack && project.techStack.length > 0 && (
+            <div className="pt-4 border-t">
+              <p className="text-sm font-semibold mb-3">Tech stack proficiency</p>
+              <div className="space-y-2">
+                {project.techStack.map((stackItem, i) => (
+                  <div key={stackItem.name} className="space-y-1">
+                    <div className="flex justify-between text-sm">
+                      <span>{stackItem.name}</span>
+                      <span className="font-semibold">{stackItem.level}%</span>
+                    </div>
+                    <div className="h-2 bg-secondary rounded-full overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        whileInView={{ width: `${stackItem.level}%` }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.15 + i * 0.08, duration: 0.7 }}
+                        className="h-full bg-primary rounded-full"
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Metrics */}
           {project.metrics && project.metrics.length > 0 && (
             <div className="pt-4 border-t">
@@ -171,7 +230,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
           <div className="flex gap-3 pt-2">
             {project.liveDemoUrl && (
               <Button
-                className="flex-1 group/btn"
+                className="interactive-ripple flex-1 group/btn"
                 asChild
               >
                 <a href={project.liveDemoUrl} target="_blank" rel="noopener noreferrer">
@@ -183,7 +242,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
             {project.sourceCodeUrl && (
               <Button
                 variant="outline"
-                className="flex-1 group/btn"
+                className="interactive-ripple flex-1 group/btn"
                 asChild
               >
                 <a href={project.sourceCodeUrl} target="_blank" rel="noopener noreferrer">

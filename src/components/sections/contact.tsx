@@ -15,7 +15,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { Github, Linkedin, Loader2, Mail } from 'lucide-react';
+import { Github, Linkedin, Loader2, Mail, Calendar } from 'lucide-react';
 import Link from 'next/link';
 
 const formSchema = z.object({
@@ -64,17 +64,23 @@ export function Contact() {
           <p className="mt-4 text-lg text-muted-foreground">
             Have a question or want to work together? Send me a message!
           </p>
+          <p className="mt-2 text-sm text-muted-foreground/90">
+            I typically respond within <span className="font-semibold">24–48 hours</span>.
+          </p>
         </div>
         
-        <div className="flex justify-center gap-4 my-8">
-            <Button asChild variant="outline" aria-label="Email">
-                <Link href="mailto:akshay.data@example.com"><Mail className="mr-2 h-4 w-4" /> Email</Link>
+        <div className="flex flex-col items-center gap-4 my-8 md:flex-row md:justify-center">
+            <Button asChild variant="outline" aria-label="Email" className="interactive-ripple">
+                <Link href="mailto:nihalk2120@gmail.com"><Mail className="mr-2 h-4 w-4" /> Email</Link>
             </Button>
-            <Button asChild variant="outline" aria-label="LinkedIn">
-                <Link href="https://linkedin.com"><Linkedin className="mr-2 h-4 w-4" /> LinkedIn</Link>
+            <Button asChild variant="outline" aria-label="LinkedIn" className="interactive-ripple">
+                <Link href="https://linkedin.com/in/nihal-kumar-892365233"><Linkedin className="mr-2 h-4 w-4" /> LinkedIn</Link>
             </Button>
-            <Button asChild variant="outline" aria-label="GitHub">
-                <Link href="https://github.com"><Github className="mr-2 h-4 w-4" /> GitHub</Link>
+            <Button asChild variant="outline" aria-label="GitHub" className="interactive-ripple">
+                <Link href="https://github.com/Niair"><Github className="mr-2 h-4 w-4" /> GitHub</Link>
+            </Button>
+            <Button asChild variant="outline" aria-label="Schedule a call" className="interactive-ripple">
+                <Link href="https://calendly.com" target="_blank"><Calendar className="mr-2 h-4 w-4" /> Schedule a call</Link>
             </Button>
         </div>
 
@@ -123,7 +129,7 @@ export function Contact() {
               />
               <Button
                 type="submit"
-                className="w-full"
+                className="interactive-ripple w-full"
                 size="lg"
                 disabled={isSubmitting}
               >

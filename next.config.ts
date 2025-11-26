@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
+    qualities: [75, 80, 85, 90],
     remotePatterns: [
       {
         protocol: 'https',
@@ -25,6 +26,12 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'picsum.photos',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'github-readme-stats.vercel.app',
         port: '',
         pathname: '/**',
       },

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Home, User, Briefcase, Star, FolderGit2, Mail } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
-import Link from 'next/link';
+import { Magnetic } from '@/components/magnetic';
 
 const navItems = [
   { id: 'hero', icon: Home, label: 'Home' },
@@ -66,21 +66,21 @@ export function DesktopSidebar() {
           const isActive = activeSection === item.id;
           
           return (
-            <motion.button
-              key={item.id}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.1 }}
-              onClick={() => scrollToSection(item.id)}
-              className={cn(
-                'relative group flex items-center justify-center w-12 h-12 rounded-lg transition-all duration-300',
-                isActive
-                  ? 'bg-primary text-primary-foreground shadow-lg scale-110'
-                  : 'bg-background/50 border border-border/20 text-muted-foreground hover:bg-secondary hover:text-foreground hover:scale-105 backdrop-blur-sm'
-              )}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-            >
+            <Magnetic key={item.id}>
+              <motion.button
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: index * 0.1 }}
+                onClick={() => scrollToSection(item.id)}
+                className={cn(
+                  'interactive-ripple relative group flex items-center justify-center w-12 h-12 rounded-lg transition-all duration-300',
+                  isActive
+                    ? 'bg-primary text-primary-foreground shadow-lg scale-110'
+                    : 'bg-background/50 border border-border/20 text-muted-foreground hover:bg-secondary hover:text-foreground hover:scale-105 backdrop-blur-sm'
+                )}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+              >
               <Icon className="h-5 w-5" />
               
               {/* Tooltip */}
@@ -99,6 +99,7 @@ export function DesktopSidebar() {
                 />
               )}
             </motion.button>
+            </Magnetic>
           );
         })}
       </nav>

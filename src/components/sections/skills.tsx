@@ -1,5 +1,6 @@
 'use client';
 
+import { motion } from 'framer-motion';
 import {
   Accordion,
   AccordionContent,
@@ -28,11 +29,17 @@ export function Skills() {
             defaultValue={bio.skills.map((s,i) => `item-${i}`)}
           >
             {bio.skills.map((skillCategory, index) => (
-              <AccordionItem
+              <motion.div
                 key={skillCategory.category}
-                value={`item-${index}`}
-                className="border rounded-2xl bg-card shadow-sm transition-shadow hover:shadow-lg"
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-120px" }}
+                transition={{ duration: 0.45, delay: index * 0.08, ease: 'easeOut' }}
               >
+                <AccordionItem
+                  value={`item-${index}`}
+                  className="border rounded-2xl bg-card shadow-sm transition-shadow hover:shadow-lg"
+                >
                 <AccordionTrigger className="w-full flex justify-between items-center p-6 hover:no-underline">
                   <div className="flex items-center gap-4">
                     <div className="flex items-center justify-center h-12 w-12 rounded-lg bg-primary/10 text-primary">
@@ -62,6 +69,7 @@ export function Skills() {
                   </div>
                 </AccordionContent>
               </AccordionItem>
+              </motion.div>
             ))}
           </Accordion>
         </div>

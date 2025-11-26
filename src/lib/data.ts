@@ -113,6 +113,11 @@ export const projects: Project[] = [
     liveDemoUrl: "", // Add if you have deployed link
     sourceCodeUrl: "https://github.com/Niair/ZenTaa-Hinglish-AI-Voice-Agent",
     youtubeUrl: "", // Add if you have demo video
+    techStack: [
+      { name: "Python", level: 95 },
+      { name: "LLMs & RAG", level: 90 },
+      { name: "Speech (STT/TTS)", level: 88 },
+    ],
     metrics: [
       { name: "Response Time", value: 95, fill: "var(--color-speed)" },
       { name: "Accuracy", value: 90, fill: "var(--color-accuracy)" },
@@ -128,6 +133,11 @@ export const projects: Project[] = [
     liveDemoUrl: "https://huggingface.co/spaces/NihalNiair/customer_churn_app_using_cicd",
     sourceCodeUrl: "https://github.com/Niair/Customer_Churn_Prediction_using_MLOpps_MLflow_AWS_CI-CD",
     youtubeUrl: "",
+    techStack: [
+      { name: "MLOps", level: 92 },
+      { name: "MLflow & CI/CD", level: 90 },
+      { name: "Docker & Cloud", level: 88 },
+    ],
     metrics: [
       { name: "Accuracy", value: 91, fill: "var(--color-accuracy)" },
       { name: "AUC-ROC", value: 92, fill: "var(--color-roc)" },
@@ -144,6 +154,11 @@ export const projects: Project[] = [
     liveDemoUrl: "https://niair-ipdf-srcuiapp-jrucow.streamlit.app/",
     sourceCodeUrl: "https://github.com/Niair/iPDF_Multimodal_RAG",
     youtubeUrl: "",
+    techStack: [
+      { name: "LangChain", level: 94 },
+      { name: "Vector DBs", level: 90 },
+      { name: "Multimodal RAG", level: 92 },
+    ],
     metrics: [
       { name: "Query Accuracy", value: 94, fill: "var(--color-accuracy)" },
       { name: "Response Time", value: 88, fill: "var(--color-speed)" },
@@ -159,6 +174,11 @@ export const projects: Project[] = [
     liveDemoUrl: "",
     sourceCodeUrl: "https://github.com/Niair/Mobile-Device-Data-Insights-Using-EDA",
     youtubeUrl: "",
+    techStack: [
+      { name: "EDA", level: 93 },
+      { name: "Visualization", level: 90 },
+      { name: "Python Stack", level: 88 },
+    ],
     metrics: [
       { name: "Data Points", value: 95, fill: "var(--color-data)" },
       { name: "Insights", value: 87, fill: "var(--color-insights)" },
@@ -172,7 +192,7 @@ export const socialLinks = [
   { name: "Email", url: "mailto:nihalk2120@gmail.com", icon: Mail },
 ];
 
-// Achievements data (optional - you can add this to your types if needed)
+// Achievements data
 export const achievements = [
   {
     title: "LeetCode Problem Solver",
@@ -188,5 +208,55 @@ export const achievements = [
     title: "Community Educator",
     description: "Teacher at Robin Hood Army - Providing educational support to children",
     icon: "🎓",
+  },
+];
+
+// Numeric stats used in the StatsSection counters
+export const stats = [
+  {
+    label: 'LeetCode Problems Solved',
+    value: 158,
+    suffix: '+',
+    hint: 'Across Easy, Medium, and Hard questions',
+  },
+  {
+    label: 'Production-Grade Projects',
+    value: 10,
+    suffix: '+',
+    hint: 'End-to-end ML, RAG, and MLOps builds',
+  },
+  {
+    label: 'Community & Teaching Hours',
+    value: 100,
+    suffix: '+',
+    hint: 'Mentoring and teaching sessions delivered',
+  },
+];
+
+// Testimonials / recommendations
+export const testimonials = [
+  {
+    name: 'Mentor from Edulyt India',
+    role: 'AI & ML Mentor',
+    text:
+      'Nihal consistently delivered high-quality ML solutions and was proactive in proposing improvements to our deployment pipelines.',
+    source: 'LinkedIn',
+    url: 'https://linkedin.com/in/nihal-kumar-892365233',
+  },
+  {
+    name: 'Faculty, Amity University',
+    role: 'Professor of Computer Science',
+    text:
+      'He demonstrates a strong grasp of machine learning foundations and applies them to real-world projects with clean, production-ready code.',
+    source: 'Academic Reference',
+    url: 'https://linkedin.com/in/nihal-kumar-892365233',
+  },
+  {
+    name: 'Robin Hood Army Coordinator',
+    role: 'Community Lead',
+    text:
+      'Nihal is dedicated, patient, and excellent at breaking down complex technical topics for students in our community programs.',
+    source: 'Community Work',
+    url: 'https://robinhoodarmy.com',
   },
 ];

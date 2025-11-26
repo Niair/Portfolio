@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from './ui/button';
-import { cn } from '@/lib/utils';
+import { Magnetic } from '@/components/magnetic';
 
 const navItems = [
   { name: 'Home', href: '#hero', icon: Home },
@@ -66,15 +66,23 @@ export function CubeNav() {
             <nav>
               <ul className="grid grid-cols-3 gap-2">
                 {navItems.map(item => (
-                  <motion.li key={item.name} variants={itemVariants}>
-                    <Link
-                      href={item.href}
-                      onClick={() => setIsOpen(false)}
-                      className="flex flex-col items-center gap-1 rounded-lg p-2 text-center text-xs font-medium text-foreground/80 transition-colors hover:bg-primary/10 hover:text-primary"
-                    >
-                      <item.icon className="h-5 w-5" />
-                      <span>{item.name}</span>
-                    </Link>
+                  <motion.li
+                    key={item.name}
+                    variants={itemVariants}
+                    whileHover={{ scale: 1.06, y: -2 }}
+                    whileTap={{ scale: 0.97 }}
+                    transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                  >
+                    <Magnetic>
+                      <Link
+                        href={item.href}
+                        onClick={() => setIsOpen(false)}
+                        className="flex flex-col items-center gap-1 rounded-lg border border-transparent p-2 text-center text-xs font-medium text-foreground/80 transition-all hover:border-primary/40 hover:bg-primary/10 hover:text-primary hover:shadow-md"
+                      >
+                        <item.icon className="h-5 w-5" />
+                        <span>{item.name}</span>
+                      </Link>
+                    </Magnetic>
                   </motion.li>
                 ))}
               </ul>
@@ -84,7 +92,7 @@ export function CubeNav() {
       </AnimatePresence>
       <Button
         onClick={() => setIsOpen(!isOpen)}
-        className="h-14 w-14 rounded-full shadow-lg"
+        className="interactive-ripple h-14 w-14 rounded-full shadow-lg transition-transform hover:scale-105 active:scale-95"
         size="icon"
         aria-label="Toggle navigation menu"
       >

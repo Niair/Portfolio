@@ -11,6 +11,8 @@ import { Experience } from '@/components/sections/experience';
 import { Hero } from '@/components/sections/hero';
 import { Projects } from '@/components/sections/projects';
 import { Skills } from '@/components/sections/skills';
+import { StatsSection } from '@/components/sections/stats';
+import { Testimonials } from '@/components/sections/testimonials';
 import { Separator } from '@/components/ui/separator';
 
 export default function Home() {
@@ -61,6 +63,26 @@ export default function Home() {
             transition={{ duration: 0.8 }}
           >
             <About />
+          </motion.div>
+
+          {/* Stats & Achievements Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8 }}
+          >
+            <StatsSection />
+          </motion.div>
+
+          {/* Testimonials Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8 }}
+          >
+            <Testimonials />
           </motion.div>
 
           <Separator className="my-12 md:my-24" />

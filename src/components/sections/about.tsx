@@ -1,8 +1,29 @@
-import { bio } from '@/lib/data';
+'use client';
+
+import { useEffect, useRef } from 'react';
+import { motion, useInView, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { getPlaceholderImage } from '@/lib/placeholder-images';
 import Image from 'next/image';
 import { Button } from '../ui/button';
 import Link from 'next/link';
+
+function AnimatedCounter({ value }: { value: number }) {
+  const ref = useRef<HTMLSpanElement | null>(null);
+  const isInView = useInView(ref, { once: true, amount: 0.6 });
+  const motionValue = useMotionValue(0);
+  const spring = useSpring(motionValue, { stiffness: 120, damping: 18, mass: 0.5 });
+  const rounded = useTransform(spring, latest => Math.floor(latest));
+
+  useEffect(() => {
+    if (isInView) {
+      motionValue.set(value);
+    }
+  }, [isInView, motionValue, value]);
+
+  return (
+    <motion.span ref={ref}>{rounded}</motion.span>
+  );
+}
 
 export function About() {
   const aboutImage = getPlaceholderImage('about');
@@ -37,9 +58,15 @@ export function About() {
             )}
           </div>
           <div className="lg:col-span-3">
-            <p className="text-xl text-foreground/80 leading-relaxed">
-              I'm a passionate data scientist turning complex datasets into actionable insights through machine learning and data visualization. I am always excited to tackle new challenges and build innovative data-driven solutions.
-            </p>
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-120px" }}
+              transition={{ duration: 0.5, ease: 'easeOut' }}
+              className="text-xl text-foreground/80 leading-relaxed"
+            >
+              I&apos;m a passionate data scientist turning complex datasets into actionable insights through machine learning and data visualization. I am always excited to tackle new challenges and build innovative data-driven solutions.
+            </motion.p>
             <div className="mt-8 flex flex-wrap gap-2">
               <span className="inline-flex items-center rounded-lg bg-secondary px-3 py-1.5 text-sm font-medium text-secondary-foreground">Machine Learning</span>
               <span className="inline-flex items-center rounded-lg bg-secondary px-3 py-1.5 text-sm font-medium text-secondary-foreground">Data Visualization</span>
@@ -47,19 +74,25 @@ export function About() {
             </div>
             <div className="mt-10 flex gap-12">
               <div>
-                <p className="text-5xl font-bold text-primary" aria-label="Over 4 years of experience">4+</p>
+                <p className="text-5xl font-bold text-primary" aria-label="Over 4 years of experience">
+                  <AnimatedCounter value={4} />+
+                </p>
                 <p className="text-muted-foreground mt-2 text-sm uppercase tracking-wider">Years experience</p>
               </div>
               <div>
-                <p className="text-5xl font-bold text-primary" aria-label="Over 23 projects completed">23+</p>
+                <p className="text-5xl font-bold text-primary" aria-label="Over 23 projects completed">
+                  <AnimatedCounter value={23} />+
+                </p>
                 <p className="text-muted-foreground mt-2 text-sm uppercase tracking-wider">Projects completed</p>
               </div>
               <div>
-                <p className="text-5xl font-bold text-primary" aria-label="Worked at over 3 companies">3+</p>
+                <p className="text-5xl font-bold text-primary" aria-label="Worked at over 3 companies">
+                  <AnimatedCounter value={3} />+
+                </p>
                 <p className="text-muted-foreground mt-2 text-sm uppercase tracking-wider">Companies worked</p>
               </div>
             </div>
-            <Button asChild className="mt-12" size="lg">
+            <Button asChild className="interactive-ripple mt-12" size="lg">
               <Link href="#contact">Leave a message</Link>
             </Button>
           </div>
