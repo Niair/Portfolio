@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react';
 import { motion, useInView, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { getPlaceholderImage } from '@/lib/placeholder-images';
+import { bio } from '@/lib/data';
 import Image from 'next/image';
 import { Button } from '../ui/button';
 import Link from 'next/link';
@@ -11,7 +12,7 @@ function AnimatedCounter({ value }: { value: number }) {
   const ref = useRef<HTMLSpanElement | null>(null);
   const isInView = useInView(ref, { once: true, amount: 0.6 });
   const motionValue = useMotionValue(0);
-  const spring = useSpring(motionValue, { stiffness: 120, damping: 18, mass: 0.5 });
+  const spring = useSpring(motionValue, { stiffness: 100, damping: 15, mass: 0.5 });
   const rounded = useTransform(spring, latest => Math.floor(latest));
 
   useEffect(() => {
@@ -29,21 +30,36 @@ export function About() {
   const aboutImage = getPlaceholderImage('about');
 
   return (
-    <section id="about" className="py-24 sm:py-32">
+    <section id="about" className="py-24 sm:py-32 relative overflow-hidden">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold tracking-tight sm:text-5xl font-headline">
+        <div className="text-center mb-20">
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-4xl sm:text-5xl font-bold tracking-tight text-foreground mb-4"
+          >
             About Me
-          </h2>
-          <p className="text-lg text-muted-foreground mt-4 max-w-2xl mx-auto">
-            A brief introduction to my background and passion for data.
-          </p>
+          </motion.h2>
+          <motion.div
+            initial={{ opacity: 0, width: 0 }}
+            whileInView={{ opacity: 1, width: "60px" }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            className="h-1 bg-primary mx-auto rounded-full"
+          />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-24 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-20 items-center">
           <div className="lg:col-span-2 flex justify-center">
             {aboutImage && (
-              <div className="relative w-80 h-96 rounded-2xl overflow-hidden shadow-2xl transform transition-transform duration-500 hover:scale-105 hover:shadow-primary/20">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="relative w-80 h-96 rounded-2xl overflow-hidden shadow-xl card-hover"
+              >
                 <Image
                   src={aboutImage.imageUrl}
                   alt="A professional portrait of Nihal"
@@ -53,48 +69,85 @@ export function About() {
                   className="object-cover"
                   loading="lazy"
                 />
-                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-              </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+              </motion.div>
             )}
           </div>
+          
           <div className="lg:col-span-3">
             <motion.p
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-120px" }}
               transition={{ duration: 0.5, ease: 'easeOut' }}
-              className="text-xl text-foreground/80 leading-relaxed"
+              className="text-lg text-foreground/80 leading-relaxed mb-8"
             >
-              I&apos;m a passionate data scientist turning complex datasets into actionable insights through machine learning and data visualization. I am always excited to tackle new challenges and build innovative data-driven solutions.
+              {bio.summary}
             </motion.p>
-            <div className="mt-8 flex flex-wrap gap-2">
-              <span className="inline-flex items-center rounded-lg bg-secondary px-3 py-1.5 text-sm font-medium text-secondary-foreground">Machine Learning</span>
-              <span className="inline-flex items-center rounded-lg bg-secondary px-3 py-1.5 text-sm font-medium text-secondary-foreground">Data Visualization</span>
-              <span className="inline-flex items-center rounded-lg bg-secondary px-3 py-1.5 text-sm font-medium text-secondary-foreground">Statistical Analysis</span>
-            </div>
-            <div className="mt-10 flex gap-12">
-              <div>
-                <p className="text-5xl font-bold text-primary" aria-label="Over 4 years of experience">
-                  <AnimatedCounter value={4} />+
-                </p>
-                <p className="text-muted-foreground mt-2 text-sm uppercase tracking-wider">Years experience</p>
-              </div>
-              <div>
-                <p className="text-5xl font-bold text-primary" aria-label="Over 23 projects completed">
-                  <AnimatedCounter value={23} />+
-                </p>
-                <p className="text-muted-foreground mt-2 text-sm uppercase tracking-wider">Projects completed</p>
-              </div>
-              <div>
-                <p className="text-5xl font-bold text-primary" aria-label="Worked at over 3 companies">
-                  <AnimatedCounter value={3} />+
-                </p>
-                <p className="text-muted-foreground mt-2 text-sm uppercase tracking-wider">Companies worked</p>
-              </div>
-            </div>
-            <Button asChild className="interactive-ripple mt-12" size="lg">
-              <Link href="#contact">Leave a message</Link>
-            </Button>
+
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="flex flex-wrap gap-2 mb-10"
+            >
+              {['Machine Learning', 'Data Visualization', 'Statistical Analysis', 'Deep Learning'].map((skill, index) => (
+                <motion.span
+                  key={skill}
+                  initial={{ opacity: 0, scale: 0 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.05 * index }}
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  className="inline-flex items-center rounded-lg bg-secondary px-4 py-2 text-sm font-medium text-foreground border border-border"
+                >
+                  {skill}
+                </motion.span>
+              ))}
+            </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="grid grid-cols-3 gap-6 mb-10"
+            >
+              {[
+                { value: 4, label: 'Years Experience' },
+                { value: 23, label: 'Projects Completed' },
+                { value: 3, label: 'Companies Worked' },
+              ].map((stat) => (
+                <motion.div
+                  key={stat.label}
+                  whileHover={{ scale: 1.05, y: -4 }}
+                  className="text-center p-5 rounded-xl bg-secondary/50 border border-border"
+                >
+                  <p className="text-4xl font-bold text-primary">
+                    <AnimatedCounter value={stat.value} />+
+                  </p>
+                  <p className="text-muted-foreground mt-2 text-xs uppercase tracking-wider">
+                    {stat.label}
+                  </p>
+                </motion.div>
+              ))}
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+            >
+              <Button 
+                asChild 
+                className="interactive-ripple btn-enhanced bg-primary hover:bg-primary/90 text-primary-foreground shadow-md" 
+                size="lg"
+              >
+                <Link href="#contact">Get In Touch</Link>
+              </Button>
+            </motion.div>
           </div>
         </div>
       </div>

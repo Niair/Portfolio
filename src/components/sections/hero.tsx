@@ -1,14 +1,12 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { motion, useMotionValue, useSpring, useTransform, useReducedMotion } from 'framer-motion';
-import { ArrowDown, Download, Play } from 'lucide-react';
+import { ArrowDown, Download, Play, Sparkles } from 'lucide-react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { bio } from '@/lib/data';
 import { getPlaceholderImage } from '@/lib/placeholder-images';
-import Link from 'next/link';
-import { TextReveal } from '@/components/text-reveal';
 import {
   Dialog,
   DialogContent,
@@ -18,15 +16,166 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 
+// Subtle Google Antigravity-style Particle System
+function SubtleAntigravityParticles() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const particlesRef = useRef<Array<{
+    x: number;
+    y: number;
+    vx: number;
+    vy: number;
+    radius: number;
+    mass: number;
+    baseX: number;
+    baseY: number;
+  }>>([]);
+  const mouseRef = useRef({ x: 0, y: 0, active: false });
+  const animationRef = useRef<number>();
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      initParticles();
+    };
+
+    const initParticles = () => {
+      const spacing = 80;
+      const cols = Math.ceil(canvas.width / spacing);
+      const rows = Math.ceil(canvas.height / spacing);
+      
+      particlesRef.current = [];
+      for (let i = 0; i < cols; i++) {
+        for (let j = 0; j < rows; j++) {
+          const x = i * spacing + Math.random() * 20 - 10;
+          const y = j * spacing + Math.random() * 20 - 10;
+          particlesRef.current.push({
+            x,
+            y,
+            vx: 0,
+            vy: 0,
+            radius: 1.5,
+            mass: 1,
+            baseX: x,
+            baseY: y,
+          });
+        }
+      }
+    };
+
+    resize();
+    window.addEventListener('resize', resize);
+
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseRef.current = { x: e.clientX, y: e.clientY, active: true };
+    };
+
+    const handleMouseLeave = () => {
+      mouseRef.current.active = false;
+    };
+
+    canvas.addEventListener('mousemove', handleMouseMove);
+    canvas.addEventListener('mouseleave', handleMouseLeave);
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      particlesRef.current.forEach((particle) => {
+        // Antigravity from cursor
+        if (mouseRef.current.active) {
+          const dx = particle.x - mouseRef.current.x;
+          const dy = particle.y - mouseRef.current.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          const maxDistance = 200;
+
+          if (distance < maxDistance) {
+            const force = ((maxDistance - distance) / maxDistance) * 0.5;
+            const angle = Math.atan2(dy, dx);
+            particle.vx += Math.cos(angle) * force;
+            particle.vy += Math.sin(angle) * force;
+          }
+        }
+
+        // Spring back to original position
+        const springX = (particle.baseX - particle.x) * 0.02;
+        const springY = (particle.baseY - particle.y) * 0.02;
+        particle.vx += springX;
+        particle.vy += springY;
+
+        // Apply damping
+        particle.vx *= 0.92;
+        particle.vy *= 0.92;
+
+        // Update position
+        particle.x += particle.vx;
+        particle.y += particle.vy;
+
+        // Draw particle - subtle blue/gray
+        ctx.save();
+        ctx.fillStyle = 'rgba(59, 130, 246, 0.15)';
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        // Draw subtle connections
+        particlesRef.current.forEach((other) => {
+          const dx = particle.x - other.x;
+          const dy = particle.y - other.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          
+          if (distance < 120 && distance > 0) {
+            ctx.save();
+            const alpha = (1 - distance / 120) * 0.08;
+            ctx.strokeStyle = `rgba(59, 130, 246, ${alpha})`;
+            ctx.lineWidth = 0.5;
+            ctx.beginPath();
+            ctx.moveTo(particle.x, particle.y);
+            ctx.lineTo(other.x, other.y);
+            ctx.stroke();
+            ctx.restore();
+          }
+        });
+      });
+
+      animationRef.current = requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    return () => {
+      window.removeEventListener('resize', resize);
+      canvas.removeEventListener('mousemove', handleMouseMove);
+      canvas.removeEventListener('mouseleave', handleMouseLeave);
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 -z-10"
+      style={{ opacity: 0.4 }}
+    />
+  );
+}
+
 export function Hero() {
   const scrollToAbout = () => {
     document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const downloadResume = () => {
-    // Create a temporary link and trigger download
     const link = document.createElement('a');
-    link.href = '/resume.pdf'; // Make sure you put Resume.pdf in public folder
+    link.href = '/resume.pdf';
     link.download = 'Nihal_Kumar_Resume.pdf';
     document.body.appendChild(link);
     link.click();
@@ -34,10 +183,9 @@ export function Hero() {
   };
   
   const avatarImage = getPlaceholderImage(bio.avatarImageId);
-
   const prefersReducedMotion = useReducedMotion();
 
-  // Typewriter effect for roles
+  // Typewriter effect
   const roles = useMemo(() => bio.headline.split(' | '), []);
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
   const [typedText, setTypedText] = useState('');
@@ -47,7 +195,6 @@ export function Hero() {
     const currentRole = roles[currentRoleIndex] ?? '';
 
     if (prefersReducedMotion) {
-      // Just show static role if user prefers reduced motion
       setTypedText(currentRole);
       return;
     }
@@ -75,388 +222,217 @@ export function Hero() {
     return () => clearTimeout(timeout);
   }, [roles, currentRoleIndex, typedText, isDeleting, prefersReducedMotion]);
 
-  const mouseX = useMotionValue(0.5);
-  const mouseY = useMotionValue(0.5);
-
-  const smoothX = useSpring(mouseX, { stiffness: 60, damping: 20 });
-  const smoothY = useSpring(mouseY, { stiffness: 60, damping: 20 });
- 
-  const translateX = useTransform(smoothX, [0, 1], [-30, 30]);
-  const translateY = useTransform(smoothY, [0, 1], [-20, 20]);
-
-  const handleMouseMove = (event: React.MouseEvent<HTMLElement>) => {
-    const bounds = event.currentTarget.getBoundingClientRect();
-    const x = (event.clientX - bounds.left) / bounds.width;
-    const y = (event.clientY - bounds.top) / bounds.height;
-
-    mouseX.set(Math.min(Math.max(x, 0), 1));
-    mouseY.set(Math.min(Math.max(y, 0), 1));
-  };
-
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center px-4 md:px-8 overflow-hidden"
-      onMouseMove={prefersReducedMotion ? undefined : handleMouseMove}
+      className="relative min-h-screen flex items-center justify-center px-4 md:px-8 overflow-hidden bg-gradient-to-br from-white via-blue-50/30 to-white"
     >
-      {/* Enhanced animated background with morphing blobs */}
-      <motion.div
-        className="absolute inset-0 -z-20"
-        animate={prefersReducedMotion ? undefined : {
-          background: [
-            "radial-gradient(circle at 20% 30%, hsla(258, 94%, 63%, 0.3), transparent 60%), " +
-            "radial-gradient(circle at 80% 70%, hsla(199, 89%, 48%, 0.25), transparent 55%), " +
-            "radial-gradient(circle at 40% 80%, hsla(335, 88%, 62%, 0.2), transparent 50%)",
-            
-            "radial-gradient(circle at 70% 20%, hsla(258, 94%, 63%, 0.25), transparent 55%), " +
-            "radial-gradient(circle at 30% 60%, hsla(199, 89%, 48%, 0.3), transparent 60%), " +
-            "radial-gradient(circle at 90% 90%, hsla(335, 88%, 62%, 0.22), transparent 52%)",
-            
-            "radial-gradient(circle at 10% 70%, hsla(258, 94%, 63%, 0.28), transparent 58%), " +
-            "radial-gradient(circle at 60% 10%, hsla(199, 89%, 48%, 0.27), transparent 53%), " +
-            "radial-gradient(circle at 85% 40%, hsla(335, 88%, 62%, 0.24), transparent 48%)",
-            
-            "radial-gradient(circle at 20% 30%, hsla(258, 94%, 63%, 0.3), transparent 60%), " +
-            "radial-gradient(circle at 80% 70%, hsla(199, 89%, 48%, 0.25), transparent 55%), " +
-            "radial-gradient(circle at 40% 80%, hsla(335, 88%, 62%, 0.2), transparent 50%)",
-          ]
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-        style={{
-          x: prefersReducedMotion ? 0 : translateX,
-          y: prefersReducedMotion ? 0 : translateY,
-        }}
-      />
-      
-      {/* Secondary gradient layer for depth */}
-      <motion.div 
-        className="absolute inset-0 -z-19"
-        animate={prefersReducedMotion ? undefined : {
-          opacity: [0.3, 0.6, 0.4, 0.3],
-        }}
-        transition={{
-          duration: 15,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-        style={{
-          background: "radial-gradient(circle at 50% 50%, hsla(var(--primary) / 0.15), transparent 70%)",
-          filter: "blur(40px)",
-        }}
-      />
-      <div className="absolute inset-0 bg-gradient-to-br from-background via-background/80 to-secondary/20 -z-10" />
- 
-      {/* Interactive particle system with antigravity effects */}
-      {!prefersReducedMotion && (
-        <ParticleSystem />
-      )}
- 
+      {/* Subtle Particle System */}
+      {!prefersReducedMotion && <SubtleAntigravityParticles />}
+
       <div className="container mx-auto max-w-7xl">
-        <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-          {/* Left side - Text content */}
+        <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
+          {/* Left Content */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-4 md:space-y-6 order-2 md:order-1"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="space-y-8 order-2 md:order-1"
           >
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="space-y-3"
+              transition={{ delay: 0.2, duration: 0.6 }}
+              className="space-y-6"
             >
               <motion.h1 
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold tracking-tight flex flex-wrap items-center gap-2"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight text-foreground"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
                 transition={{ delay: 0.3 }}
               >
-                Hi, I&apos;m <span className="text-primary">{bio.name}</span>
-                <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-3 py-1 text-xs md:text-sm font-medium text-emerald-400 border border-emerald-500/40">
-                  <span className="relative flex h-2 w-2">
+                <span className="block text-foreground/80 text-2xl sm:text-3xl md:text-4xl font-normal mb-2">
+                  Hi, I'm
+                </span>
+                <span className="block gradient-text">
+                  {bio.name}
+                </span>
+              </motion.h1>
+
+              <div className="flex flex-wrap gap-3 items-center">
+                <motion.span
+                  className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-2 text-sm font-medium text-emerald-600 border border-emerald-200"
+                  animate={prefersReducedMotion ? undefined : { scale: [1, 1.02, 1] }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                >
+                  <span className="relative flex h-2.5 w-2.5">
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+                    <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
                   </span>
                   Open to opportunities
-                </span>
-                <motion.span
-                  animate={{ rotate: [0, 14, -8, 14, -4, 10, 0] }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    repeatDelay: 1,
-                  }}
-                  className="inline-block origin-bottom-right ml-2"
-                >
-                  👋
                 </motion.span>
-              </motion.h1>
+                
+                <motion.span
+                  className="inline-flex items-center gap-2 rounded-full bg-blue-50 px-4 py-2 text-sm font-medium text-blue-600 border border-blue-200"
+                  whileHover={{ scale: 1.05 }}
+                >
+                  <Sparkles className="w-4 h-4" />
+                  4+ Years Experience
+                </motion.span>
+              </div>
               
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
-                className="text-base md:text-lg text-muted-foreground font-mono"
+                className="space-y-3"
               >
-                <span className="text-xs uppercase tracking-[0.2em] text-primary/70">Roles</span>
-                <div className="mt-1 text-sm md:text-base">
-                  <span className="opacity-60">I specialize in </span>
-                  <span className="text-primary">{typedText}</span>
-                  {!prefersReducedMotion && <span className="inline-block w-2 h-5 -mb-1 bg-primary/80 ml-1 animate-pulse" />}
+                <div className="text-xl md:text-2xl text-foreground/70 font-light">
+                  <span>I excel in </span>
+                  <span className="font-semibold text-primary">{typedText}</span>
+                  {!prefersReducedMotion && <span className="inline-block w-0.5 h-6 -mb-1 bg-primary ml-1 animate-pulse" />}
                 </div>
               </motion.div>
             </motion.div>
 
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.8 }}
-              className="text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed"
-            >
-              <TextReveal text={bio.summary} />
-            </motion.p>
-
-            {/* Social proof */}
+            {/* Social Proof */}
             <motion.div
-              initial={{ opacity: 0, y: 12 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9 }}
-              className="flex flex-wrap gap-4 text-xs md:text-sm text-muted-foreground/90"
+              transition={{ delay: 0.7 }}
+              className="flex flex-wrap gap-3 text-sm text-muted-foreground"
             >
-              <span className="inline-flex items-center gap-1 rounded-full bg-secondary/60 px-3 py-1">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                150+ LeetCode problems solved
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/50">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                158+ LeetCode solved
               </span>
-              <span className="inline-flex items-center gap-1 rounded-full bg-secondary/60 px-3 py-1">
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/50">
                 <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-                Active on GitHub @Niair
+                GitHub @Niair
               </span>
             </motion.div>
 
-            {/* Enhanced CTA Buttons */}
+            {/* CTA Buttons */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1 }}
-              className="flex flex-col sm:flex-row flex-wrap gap-3 md:gap-4"
+              transition={{ delay: 0.9 }}
+              className="flex flex-col sm:flex-row gap-4 pt-4"
             >
               <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.98 }}
               >
                 <Button
                   size="lg"
-                  className="interactive-ripple btn-enhanced group w-full sm:w-auto"
+                  className="interactive-ripple btn-enhanced w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground shadow-md"
                   onClick={downloadResume}
                 >
-                  <motion.div
-                    animate={{ y: [0, -2, 0] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                    className="flex items-center"
-                  >
-                    <Download className="mr-2 h-4 w-4 group-hover:animate-bounce" />
-                    Download Resume
-                  </motion.div>
+                  <Download className="mr-2 h-4 w-4" />
+                  Download Resume
                 </Button>
               </motion.div>
               
               <Dialog>
                 <DialogTrigger asChild>
                   <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.98 }}
                   >
                     <Button
                       size="lg"
                       variant="outline"
-                      className="interactive-ripple btn-enhanced group w-full sm:w-auto"
+                      className="interactive-ripple btn-enhanced w-full sm:w-auto border-2"
                     >
-                      <motion.div
-                        animate={{ rotate: [0, 360] }}
-                        transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                        className="flex items-center"
-                      >
-                        <Play className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform" />
-                        Intro Video
-                      </motion.div>
+                      <Play className="mr-2 h-4 w-4" />
+                      Intro Video
                     </Button>
                   </motion.div>
                 </DialogTrigger>
                 <DialogContent className="max-w-3xl">
                   <DialogHeader>
-                    <DialogTitle>Intro to my work</DialogTitle>
+                    <DialogTitle>Introduction to My Work</DialogTitle>
                     <DialogDescription>
-                      Short overview of my background, projects, and how I approach building ML systems.
+                      Overview of my projects and approach to ML systems
                     </DialogDescription>
                   </DialogHeader>
-                  <div className="mt-4 aspect-video w-full overflow-hidden rounded-xl border bg-black/80">
+                  <div className="mt-4 aspect-video w-full overflow-hidden rounded-xl border bg-black">
                     <iframe
                       className="h-full w-full"
                       src="https://www.youtube.com/embed/dQw4w9WgXcQ"
                       title="Intro video"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
                     />
                   </div>
                 </DialogContent>
               </Dialog>
             </motion.div>
-
           </motion.div>
 
-          {/* Right side - Image */}
+          {/* Right - Image */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
+            initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="relative order-1 md:order-2 group"
+            className="relative order-1 md:order-2"
           >
             <motion.div
-              animate={prefersReducedMotion ? undefined : { y: [0, -20, 0] }}
-              transition={prefersReducedMotion ? undefined : {
-                duration: 4,
-                repeat: Infinity,
-                repeatType: "reverse",
-              }}
+              animate={prefersReducedMotion ? undefined : { y: [0, -15, 0] }}
+              transition={{ duration: 6, repeat: Infinity, repeatType: "reverse" }}
               className="relative"
             >
-              {/* Enhanced glowing background effect with hover animation */}
-              <motion.div 
-                className="absolute inset-0 bg-primary/20 rounded-full blur-3xl"
-                animate={prefersReducedMotion ? undefined : {
-                  scale: [1, 1.2, 1],
-                  opacity: [0.3, 0.5, 0.3],
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              />
-              
-              {/* Secondary glow layer */}
-              <motion.div 
-                className="absolute inset-0 rounded-full blur-2xl"
-                animate={prefersReducedMotion ? undefined : {
-                  scale: [1.1, 1.3, 1.1],
-                  opacity: [0.2, 0.4, 0.2],
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 0.5,
-                }}
-                style={{
-                  background: "radial-gradient(circle, hsla(var(--primary) / 0.3), transparent 70%)",
-                }}
-              />
-              
-              <div className="relative w-full aspect-square max-w-xs sm:max-w-sm md:max-w-md mx-auto">
-                {/* Gradient background with hover effect */}
-                <motion.div 
-                  className="absolute inset-0 rounded-full"
-                  animate={prefersReducedMotion ? undefined : {
-                    rotate: [0, 360],
-                  }}
-                  transition={{
-                    duration: 20,
-                    repeat: Infinity,
-                    ease: "linear"
-                  }}
-                  style={{
-                    background: "conic-gradient(from 0deg, hsla(var(--primary) / 0.4), hsla(var(--primary) / 0.1), hsla(var(--primary) / 0.4))",
-                  }}
-                />
+              <div className="relative w-full aspect-square max-w-md mx-auto">
+                {/* Subtle glow effect */}
+                <div className="absolute inset-0 bg-blue-200/20 rounded-full blur-3xl" />
                 
-                {/* Image container with enhanced hover effects */}
+                {/* Image Container */}
                 <motion.div 
-                  className="relative w-full h-full rounded-full overflow-hidden"
-                  whileHover={prefersReducedMotion ? undefined : {
-                    scale: 1.05,
-                    rotateY: 5,
-                  }}
-                  transition={{
-                    duration: 0.3,
-                    ease: "easeOut"
-                  }}
+                  className="relative w-full h-full rounded-full overflow-hidden border-4 border-white shadow-2xl"
+                  whileHover={prefersReducedMotion ? undefined : { scale: 1.03 }}
+                  transition={{ duration: 0.3 }}
                 >
                   {avatarImage && (
-                    <>
-                      <Image
-                        src={avatarImage.imageUrl}
-                        alt={bio.name}
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        className="rounded-full object-cover border-4 border-background shadow-2xl"
-                        priority
-                        data-ai-hint={avatarImage.imageHint}
-                      />
-                      {/* Overlay with subtle gradient */}
-                      <motion.div 
-                        className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                        style={{
-                          background: "linear-gradient(135deg, transparent 60%, hsla(var(--primary) / 0.1) 100%)",
-                        }}
-                      />
-                    </>
+                    <Image
+                      src={avatarImage.imageUrl}
+                      alt={bio.name}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="rounded-full object-cover"
+                      priority
+                      data-ai-hint={avatarImage.imageHint}
+                    />
                   )}
                 </motion.div>
               </div>
             </motion.div>
 
-            {/* Enhanced floating tech badges - hidden on mobile */}
-            <div className="hidden md:block">
+            {/* Floating Tech Badges */}
+            <div className="hidden lg:block">
               {[
-                { name: 'Python', icon: '🐍', color: 'hsl(217, 89%, 61%)' },
-                { name: 'ML', icon: '🧠', color: 'hsl(142, 71%, 45%)' },
-                { name: 'AI', icon: '🤖', color: 'hsl(262, 83%, 64%)' },
-                { name: 'LLM', icon: '💬', color: 'hsl(39, 94%, 55%)' },
-              ].map((tech, index) => (
+                { name: 'Python', delay: 0, top: '15%', right: '-10px' },
+                { name: 'ML', delay: 0.15, top: '35%', left: '-10px' },
+                { name: 'AI', delay: 0.3, top: '55%', right: '-10px' },
+                { name: 'LLM', delay: 0.45, top: '75%', left: '-10px' },
+              ].map((tech) => (
                 <motion.div
                   key={tech.name}
-                  initial={{ opacity: 0, scale: 0, rotate: -10 }}
-                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: 1, scale: 1 }}
                   transition={{
-                    delay: 1.5 + index * 0.15,
+                    delay: 1.5 + tech.delay,
                     type: "spring",
                     stiffness: 200,
-                    damping: 15,
                   }}
-                  whileHover={{
-                    scale: 1.1,
-                    rotate: [0, -5, 5, 0],
-                    transition: {
-                      rotate: { duration: 0.5, ease: "easeInOut" },
-                      scale: { duration: 0.2 }
-                    }
-                  }}
-                  className="absolute bg-background/80 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium shadow-lg border border-primary/20 cursor-pointer"
+                  whileHover={{ scale: 1.1, y: -3 }}
+                  className="absolute px-5 py-2.5 rounded-full text-sm font-semibold bg-white border-2 border-blue-200 text-primary shadow-lg cursor-pointer"
                   style={{
-                    top: `${20 + index * 20}%`,
-                    right: `${index % 2 === 0 ? -20 : 'auto'}`,
-                    left: `${index % 2 === 1 ? -20 : 'auto'}`,
-                    background: `linear-gradient(135deg, hsla(var(--background) / 0.8), ${tech.color}20)`,
-                    boxShadow: `0 4px 20px ${tech.color}30`,
+                    top: tech.top,
+                    right: tech.right,
+                    left: tech.left,
                   }}
                 >
-                  <span className="mr-2 text-xs">{tech.icon}</span>
-                  <span style={{ color: tech.color }}>{tech.name}</span>
-                  <motion.div
-                    className="absolute inset-0 rounded-full"
-                    initial={{ scale: 0, opacity: 0 }}
-                    whileHover={{ scale: 1.5, opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                    style={{
-                      background: `radial-gradient(circle, ${tech.color}40, transparent 70%)`,
-                      pointerEvents: 'none',
-                    }}
-                  />
+                  {tech.name}
                 </motion.div>
               ))}
             </div>
@@ -464,173 +440,20 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Scroll indicator */}
+      {/* Scroll Indicator */}
       <motion.button
         initial={{ opacity: 0 }}
-        animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: [0, 10, 0] }}
+        animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: [0, 8, 0] }}
         transition={prefersReducedMotion ? { delay: 2 } : {
           opacity: { delay: 2 },
-          y: { duration: 1.5, repeat: Infinity },
+          y: { duration: 2, repeat: Infinity },
         }}
         onClick={scrollToAbout}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground hover:text-foreground transition-colors hidden md:flex"
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors hidden md:flex"
       >
-        <span className="text-sm">Scroll down</span>
+        <span className="text-sm font-medium">Scroll down</span>
         <ArrowDown className="h-5 w-5" />
       </motion.button>
     </section>
-  );
-}
-
-// Interactive Particle System with Antigravity Effects
-function ParticleSystem() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [particles, setParticles] = useState<Array<{
-    id: number;
-    x: number;
-    y: number;
-    vx: number;
-    vy: number;
-    size: number;
-    opacity: number;
-    color: string;
-    originalX: number;
-    originalY: number;
-  }>>([]);
-
-  useEffect(() => {
-    // Initialize particles
-    const initialParticles = Array.from({ length: 25 }, (_, i) => {
-      const isForeground = i < 12;
-      const x = Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1200);
-      const y = Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 800);
-      
-      return {
-        id: i,
-        x,
-        y,
-        originalX: x,
-        originalY: y,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
-        size: isForeground ? Math.random() * 4 + 2 : Math.random() * 2 + 1,
-        opacity: isForeground ? Math.random() * 0.4 + 0.3 : Math.random() * 0.2 + 0.1,
-        color: isForeground ? 'hsl(var(--primary))' : 'hsl(var(--primary) / 0.6)',
-      };
-    });
-    
-    setParticles(initialParticles);
-  }, []);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
-  useEffect(() => {
-    const animationFrame = () => {
-      setParticles(prevParticles => 
-        prevParticles.map(particle => {
-          let { x, y, vx, vy, originalX, originalY } = particle;
-          
-          // Calculate distance from mouse
-          const dx = mousePosition.x - x;
-          const dy = mousePosition.y - y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-          const maxDistance = 200;
-          
-          // Antigravity effect: particles repel from mouse
-          if (distance < maxDistance && distance > 0) {
-            const force = (maxDistance - distance) / maxDistance;
-            const angle = Math.atan2(dy, dx);
-            const repelForce = force * 0.02;
-            
-            vx -= Math.cos(angle) * repelForce;
-            vy -= Math.sin(angle) * repelForce;
-          }
-          
-          // Gentle drift towards original position when mouse is far
-          if (distance > maxDistance) {
-            const returnForce = 0.005;
-            vx += (originalX - x) * returnForce;
-            vy += (originalY - y) * returnForce;
-          }
-          
-          // Apply velocity damping
-          vx *= 0.98;
-          vy *= 0.98;
-          
-          // Update position
-          x += vx;
-          y += vy;
-          
-          // Boundary wrapping
-          const width = typeof window !== 'undefined' ? window.innerWidth : 1200;
-          const height = typeof window !== 'undefined' ? window.innerHeight : 800;
-          
-          if (x < -50) {
-            x = width + 50;
-            originalX = x;
-          } else if (x > width + 50) {
-            x = -50;
-            originalX = x;
-          }
-          
-          if (y < -50) {
-            y = height + 50;
-            originalY = y;
-          } else if (y > height + 50) {
-            y = -50;
-            originalY = y;
-          }
-          
-          return {
-            ...particle,
-            x,
-            y,
-            vx,
-            vy,
-            originalX,
-            originalY,
-          };
-        })
-      );
-    };
-
-    const interval = setInterval(animationFrame, 16); // ~60fps
-    return () => clearInterval(interval);
-  }, [mousePosition]);
-
-  return (
-    <div className="absolute inset-0 overflow-hidden -z-10 hidden md:block pointer-events-none">
-      {particles.map(particle => (
-        <motion.div
-          key={particle.id}
-          className="absolute rounded-full"
-          style={{
-            left: particle.x,
-            top: particle.y,
-            width: particle.size,
-            height: particle.size,
-            backgroundColor: particle.color,
-            opacity: particle.opacity,
-            boxShadow: `0 0 ${particle.size * 2}px ${particle.color}40`,
-          }}
-          whileHover={{
-            scale: 1.5,
-            opacity: particle.opacity * 1.5,
-            boxShadow: `0 0 ${particle.size * 4}px ${particle.color}60`,
-          }}
-          transition={{
-            scale: { duration: 0.3, ease: "easeOut" },
-            opacity: { duration: 0.3 },
-          }}
-        />
-      ))}
-    </div>
   );
 }

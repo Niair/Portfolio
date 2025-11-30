@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ExternalLink, Github, Youtube } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -19,56 +19,29 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
   
   const projectImage = getPlaceholderImage(project.imageId);
 
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const springX = useSpring(x, { stiffness: 220, damping: 20, mass: 0.4 });
-  const springY = useSpring(y, { stiffness: 220, damping: 20, mass: 0.4 });
-
-  const rotateX = useTransform(springY, [-40, 40], [8, -8]);
-  const rotateY = useTransform(springX, [-40, 40], [-8, 8]);
-
-  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
-    const bounds = event.currentTarget.getBoundingClientRect();
-    const relX = event.clientX - (bounds.left + bounds.width / 2);
-    const relY = event.clientY - (bounds.top + bounds.height / 2);
-
-    x.set(relX);
-    y.set(relY);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
   return (
     <motion.div
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => {
-        setIsHovered(false);
-        handleMouseLeave();
-      }}
-      className="group relative"
+      onMouseLeave={() => setIsHovered(false)}
+      className="group relative h-full"
     >
       <motion.div
-        className="relative overflow-hidden rounded-xl border bg-card/95 shadow-lg backdrop-blur-md transition-all duration-300 group-hover:bg-card/60 group-hover:shadow-2xl group-hover:border-primary/30"
-        whileHover={{ scale: 1.02 }}
-        transition={{ type: "spring", stiffness: 300, damping: 22 }}
-        style={{ rotateX, rotateY, transformPerspective: 900 }}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
+        className="relative overflow-hidden rounded-2xl bg-white border border-border shadow-lg h-full flex flex-col"
+        whileHover={{ y: -8, boxShadow: "0 20px 40px rgba(0, 0, 0, 0.1)" }}
+        transition={{ type: "spring", stiffness: 300, damping: 25 }}
       >
-        {/* Image container with overlay */}
-        <div className="relative h-64 overflow-hidden bg-muted">
+        {/* Image Container */}
+        <div className="relative h-64 overflow-hidden bg-secondary">
           {project.liveDemoUrl && (
-            <span className="absolute left-4 top-4 z-10 rounded-full bg-emerald-500/90 px-3 py-1 text-xs font-semibold text-emerald-50 shadow-md">
-              Live Demo
+            <span className="absolute left-4 top-4 z-10 rounded-full bg-emerald-500 px-3 py-1.5 text-xs font-bold text-white shadow-md">
+              ✨ Live Demo
             </span>
           )}
+          
           <motion.div
             animate={{ scale: isHovered ? 1.05 : 1 }}
             transition={{ duration: 0.4 }}
@@ -87,14 +60,10 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
             )}
           </motion.div>
           
-          {/* Gradient overlay */}
-          <motion.div
-            initial={{ opacity: 0.6 }}
-            animate={{ opacity: isHovered ? 0.9 : 0.6 }}
-            className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent"
-          />
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-white/60 via-transparent to-transparent" />
 
-          {/* Floating action buttons */}
+          {/* Action Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? 0 : 20 }}
@@ -103,8 +72,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
             {project.liveDemoUrl && (
               <Button
                 size="icon"
-                variant="secondary"
-                className="rounded-full backdrop-blur-sm"
+                className="rounded-full bg-white/90 hover:bg-white border shadow-md"
                 asChild
               >
                 <a href={project.liveDemoUrl} target="_blank" rel="noopener noreferrer">
@@ -115,8 +83,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
             {project.sourceCodeUrl && (
               <Button
                 size="icon"
-                variant="secondary"
-                className="rounded-full backdrop-blur-sm"
+                className="rounded-full bg-white/90 hover:bg-white border shadow-md"
                 asChild
               >
                 <a href={project.sourceCodeUrl} target="_blank" rel="noopener noreferrer">
@@ -127,8 +94,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
             {project.youtubeUrl && (
               <Button
                 size="icon"
-                variant="secondary"
-                className="rounded-full backdrop-blur-sm"
+                className="rounded-full bg-white/90 hover:bg-white border shadow-md"
                 asChild
               >
                 <a href={project.youtubeUrl} target="_blank" rel="noopener noreferrer">
@@ -140,12 +106,12 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
         </div>
 
         {/* Content */}
-        <div className="p-6 space-y-4">
-          <div>
-            <h3 className="text-2xl font-bold mb-2 group-hover:text-primary transition-colors">
+        <div className="p-6 space-y-4 flex-1 flex flex-col">
+          <div className="flex-1">
+            <h3 className="text-2xl font-bold mb-3 text-foreground">
               {project.title}
             </h3>
-            <p className="text-muted-foreground line-clamp-3">
+            <p className="text-muted-foreground line-clamp-3 leading-relaxed">
               {project.description}
             </p>
           </div>
@@ -157,32 +123,36 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
                 key={tag}
                 initial={{ opacity: 0, scale: 0 }}
                 whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.1 * i }}
+                transition={{ delay: 0.05 * i }}
+                whileHover={{ scale: 1.05, y: -2 }}
               >
-                <Badge variant="secondary" className="hover:bg-primary hover:text-primary-foreground transition-colors">
+                <Badge 
+                  variant="secondary" 
+                  className="border border-border hover:border-primary/50 transition-colors"
+                >
                   {tag}
                 </Badge>
               </motion.div>
             ))}
           </div>
 
-          {/* Tech stack proficiency */}
+          {/* Tech Stack */}
           {project.techStack && project.techStack.length > 0 && (
-            <div className="pt-4 border-t">
-              <p className="text-sm font-semibold mb-3">Tech stack proficiency</p>
-              <div className="space-y-2">
+            <div className="pt-4 border-t border-border">
+              <p className="text-sm font-semibold mb-3 text-foreground">Tech Stack Proficiency</p>
+              <div className="space-y-3">
                 {project.techStack.map((stackItem, i) => (
-                  <div key={stackItem.name} className="space-y-1">
-                    <div className="flex justify-between text-sm">
-                      <span>{stackItem.name}</span>
-                      <span className="font-semibold">{stackItem.level}%</span>
+                  <div key={stackItem.name}>
+                    <div className="flex justify-between text-sm mb-1.5">
+                      <span className="text-foreground/80">{stackItem.name}</span>
+                      <span className="font-semibold text-primary">{stackItem.level}%</span>
                     </div>
                     <div className="h-2 bg-secondary rounded-full overflow-hidden">
                       <motion.div
                         initial={{ width: 0 }}
                         whileInView={{ width: `${stackItem.level}%` }}
                         viewport={{ once: true }}
-                        transition={{ delay: 0.15 + i * 0.08, duration: 0.7 }}
+                        transition={{ delay: 0.15 + i * 0.08, duration: 0.8, ease: "easeOut" }}
                         className="h-full bg-primary rounded-full"
                       />
                     </div>
@@ -194,47 +164,40 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
 
           {/* Metrics */}
           {project.metrics && project.metrics.length > 0 && (
-            <div className="pt-4 border-t">
-              <p className="text-sm font-semibold mb-3">Key Metrics:</p>
-              <div className="space-y-2">
+            <div className="pt-4 border-t border-border">
+              <p className="text-sm font-semibold mb-3 text-foreground">Key Metrics</p>
+              <div className="space-y-3">
                 {project.metrics.map((metric, i) => (
-                  <motion.div
-                    key={metric.name}
-                    initial={{ width: 0 }}
-                    whileInView={{ width: "100%" }}
-                    transition={{ delay: 0.2 + i * 0.1, duration: 0.8 }}
-                    viewport={{ once: true }}
-                    className="space-y-1"
-                  >
-                    <div className="flex justify-between text-sm">
-                      <span>{metric.name}</span>
-                      <span className="font-semibold">{metric.value}%</span>
+                  <div key={metric.name}>
+                    <div className="flex justify-between text-sm mb-1.5">
+                      <span className="text-foreground/80">{metric.name}</span>
+                      <span className="font-semibold text-primary">{metric.value}%</span>
                     </div>
                     <div className="h-2 bg-secondary rounded-full overflow-hidden">
                       <motion.div
                         initial={{ width: 0 }}
                         whileInView={{ width: `${metric.value}%` }}
-                        transition={{ delay: 0.2 + i * 0.1, duration: 0.8 }}
+                        transition={{ delay: 0.2 + i * 0.1, duration: 0.8, ease: "easeOut" }}
                         viewport={{ once: true }}
-                        className="h-full bg-primary rounded-full"
+                        className="h-full rounded-full"
                         style={{ backgroundColor: metric.fill }}
                       />
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </div>
           )}
 
-          {/* Action buttons */}
-          <div className="flex gap-3 pt-2">
+          {/* Action Buttons */}
+          <div className="flex gap-3 pt-4">
             {project.liveDemoUrl && (
               <Button
-                className="interactive-ripple flex-1 group/btn"
+                className="interactive-ripple btn-enhanced flex-1 bg-primary hover:bg-primary/90 shadow-md"
                 asChild
               >
                 <a href={project.liveDemoUrl} target="_blank" rel="noopener noreferrer">
-                  <ExternalLink className="mr-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
+                  <ExternalLink className="mr-2 h-4 w-4" />
                   Live Demo
                 </a>
               </Button>
@@ -242,36 +205,17 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
             {project.sourceCodeUrl && (
               <Button
                 variant="outline"
-                className="interactive-ripple flex-1 group/btn"
+                className="interactive-ripple btn-enhanced flex-1 border-2"
                 asChild
               >
                 <a href={project.sourceCodeUrl} target="_blank" rel="noopener noreferrer">
-                  <Github className="mr-2 h-4 w-4 group-hover/btn:rotate-12 transition-transform" />
-                  Source Code
+                  <Github className="mr-2 h-4 w-4" />
+                  Source
                 </a>
               </Button>
             )}
           </div>
         </div>
-
-        {/* Shine effect on hover */}
-        <motion.div
-          className="absolute inset-0 pointer-events-none overflow-hidden rounded-xl"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: isHovered ? 1 : 0 }}
-          transition={{ duration: 0.3 }}
-        >
-          <motion.div
-            className="absolute -top-1/2 -left-1/2 w-[200%] h-[300%] bg-gradient-to-r from-transparent via-white/10 to-transparent"
-            animate={{
-              transform: isHovered ? "rotate(20deg) translateX(40%)" : "rotate(20deg) translateX(-150%)",
-            }}
-            transition={{
-              duration: isHovered ? 1 : 1.5,
-              ease: 'easeOut',
-            }}
-          />
-        </motion.div>
       </motion.div>
     </motion.div>
   );
